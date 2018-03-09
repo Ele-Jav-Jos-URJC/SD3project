@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Gestor de Incidencias</title>
+</head>
+<body>
+	<h2>Listado de Incidencias</h2>
+	<ul>
+		{{#results}}
+			<li><a href="/incidencia?id={{id}}">{{problema}}</a></li>
+		{{/results}}
+		{{^results}}
+			No hay incidencias con las caracteristicas solicitadas.
+		{{/results}}
+	</ul>
+</body>
+</html>

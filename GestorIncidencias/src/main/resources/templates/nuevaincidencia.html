@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+	<title>Gestor de Incidencias</title>
+</head>
+<body>
+	<h2>Añada los datos de la nueva incidencia</h2>
+	<form action="/guardarincidencia" method="POST">
+
+		Incidencia: <br />
+		<textarea type='text' name="problema" rows="10" cols="100" ></textarea><br /><br />
+		Categoria :
+		<select type="text" name="categoria">
+		<option value="Impresora">Impresora</option>
+		<option value="Red">Red</option>
+		<option value="Telefonía">Telefon&iacute;a</option>
+		</select>
+		<br />
+		<br />
+			
+	Visible en las FAQ:  
+		<input type="checkbox" name="esfaq" class="inline checkbox" id="checkbox1" value="false" checked="checked">
+		
+		</select> <br />
+		<br /> <input type="submit" text="" value="A&ntilde;adir" />
+	
+	
+	
+	
+	</form>
+</body>
+</html>
