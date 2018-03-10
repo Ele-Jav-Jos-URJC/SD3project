@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Gestor de Incidencias</title>
+</head>
+<body>
+	<h2>Aplicaci&oacute;n incidencias</h2>
+		{{#user}}
+			<h2>{{user}}</h2>
+		{{/user}}
+		{{#tech}}
+			<h2>{{tech}}</h2>
+		{{/tech}}
+		{{#admin}}
+			<h2>{{admin}}</h2>
+		{{/admin}}
+		<form action="/logout" method="post">
+		<input type="submit" value="Sign Out" />
+</form>
+</body>
+</html>

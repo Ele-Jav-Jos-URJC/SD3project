@@ -10,6 +10,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 @Entity
 public class Usuario {
 	@Id
@@ -36,7 +38,7 @@ public class Usuario {
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.email = email;
-		this.pass = pass;
+		this.pass = new BCryptPasswordEncoder().encode(pass);
 	}
 
 
