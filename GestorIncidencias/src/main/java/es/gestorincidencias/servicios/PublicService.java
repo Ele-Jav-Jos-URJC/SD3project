@@ -14,7 +14,7 @@ import es.gestorincidencias.repositorios.CategoriaRepository;
 import es.gestorincidencias.repositorios.IncidenciaRepositorio;
 import es.gestorincidencias.repositorios.EstadoRepository;
 
-// prueba de commit
+// prueba de commit 
 
 @Service
 public class PublicService {
