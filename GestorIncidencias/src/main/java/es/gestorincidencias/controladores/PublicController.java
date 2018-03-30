@@ -11,7 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import es.gestorincidencias.entidades.CategoriaIncidencia;
 import es.gestorincidencias.entidades.Incidencia;
 import es.gestorincidencias.servicios.PublicService;
+import es.gestorincidencias.entidades.RolUsuario;
+import es.gestorincidencias.entidades.Usuario;
+import es.gestorincidencias.entidades.*;
+import java.util.Date;
 
+/**
+ * @author CAN
+ *
+ */
 @Controller
 public class PublicController {
 	@Autowired
@@ -48,9 +56,9 @@ public class PublicController {
 
 	
 	@RequestMapping("/guardarincidencia")
-	public String AltaIncidencia(Model model,@RequestParam String problema, @RequestParam boolean esfaq) {
-		
-		Incidencia inci= publicService.setIncidencia(problema,esfaq);
+	public String AltaIncidencia(Model model,@RequestParam String problema, @RequestParam String categoria,@RequestParam boolean gender) {
+
+		Incidencia inci= publicService.setIncidencia(problema,categoria,gender);
 		model.addAttribute("results",inci);
 		return "confirmacion";
 	}
@@ -67,8 +75,17 @@ public class PublicController {
 		
 		Incidencia incidencia2=publicService.getIncidencia(incidencia);
 		model.addAttribute("results",incidencia2);
-		
-		
+
 		return "confirmacion";
 	}
+	
+//	@RequestMapping("/nuevousuario")
+//	public String nuevousuario(Model model,@RequestParam Usuario usuario) {
+//		Usuario usu=new Usuario();
+//		usuario.getNombre();
+//		Incidencia incidencia2=publicService.getIncidencia(incidencia);
+//		model.addAttribute("results",incidencia2);
+
+//		return "nuevousuario";
+//	}
 }
