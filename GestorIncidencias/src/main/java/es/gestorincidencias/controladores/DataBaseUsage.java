@@ -21,7 +21,7 @@ import es.gestorincidencias.repositorios.RolUsuarioRepository;
 import es.gestorincidencias.repositorios.UsuarioRepository;
 import scala.annotation.meta.setter;
 
-// prueba descarga
+// prueba descarga1
 @Controller
 public class DataBaseUsage implements CommandLineRunner{
 
