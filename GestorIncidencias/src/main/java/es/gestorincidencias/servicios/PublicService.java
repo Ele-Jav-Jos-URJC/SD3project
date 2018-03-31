@@ -1,9 +1,10 @@
 package es.gestorincidencias.servicios;
+
+import static org.assertj.core.api.Assertions.registerCustomDateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import es.gestorincidencias.entidades.*;
@@ -35,8 +36,7 @@ public class PublicService {
 	public List<CategoriaIncidencia> getCategorias(){
 		return categoriaRepo.findAll();
 	}
-	
-	
+
 	public int getCategoria(String categoria){
 		
 		int num=getCategoria(categoria);
@@ -57,6 +57,7 @@ public class PublicService {
 		long idNum=incidencia.getId();
 		return incidenciaRepo.findOne(idNum);
 	}
+
 	
 	// Graba un usuario
 	public Usuario setUsuario (String nombre,String apellido,String mail,String pass,String rol) 
@@ -78,12 +79,13 @@ public class PublicService {
 		return usuario;
 	}*/
 	
-	public Incidencia setIncidencia(String problema,String categoria,boolean esfaq) {
+	public Incidencia setIncidencia(String problema,String categoria,boolean esfaq) throws ParseException {
 	
 	//int num=getCategoria(categoria);
 	//CategoriaIncidencia catinci=categoriaRepo.findOne(num);
 	Usuario usuario=usuarioRepo.findByEmail("email1@mail.com");
 	Date fecha=new Date();	
+	Date fechacierre=new Date(01-01-1900);
 	EstadoIncidencia estado=estadoRepo.findOne(1);
 	PrioridadIncidencia prioridad=prioridadRepo.findOne(1);
 	//CategoriaIncidencia cat= new CategoriaIncidencia();
@@ -98,11 +100,32 @@ public class PublicService {
 	inci.setFechaInicio(fecha);
 	inci.setUsuario(usuario);
 	inci.setInforme("");
+/*	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:ii:ss");
+	String stringFechaConHora = "1900-01-01 00:00:00";
+	Date fechaConHora = sdf.parse(stringFechaConHora);
+	inci.setFechaCierre(fechaConHora);*/
+	inci.setFechaCierre(fechacierre);
 	incidenciaRepo.save(inci);
 
 
 		
 	return inci;
+		
+	}
+	
+	// J Cierra una incidencia
+	public Incidencia setIncidencia(String informe,Incidencia incidencia) {
+	EstadoIncidencia estado=estadoRepo.findOne(3);
+	PrioridadIncidencia prioridad=prioridadRepo.findOne(1);
+	incidencia.setFechaCierre(ahora);
+	incidencia.setEstado(estado);
+	//incidencia.setUsuario(usuario);
+	incidencia.setInforme(informe);
+	incidenciaRepo.save(incidencia);
+
+
+		
+	return incidencia;
 		
 	}
 	public List<Incidencia> getIncidencias(){

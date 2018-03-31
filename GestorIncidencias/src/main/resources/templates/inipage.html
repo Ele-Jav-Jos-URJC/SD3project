@@ -7,20 +7,32 @@
 	<h2>Aplicaci&oacute;n incidencias</h2>
 		{{#user}}
 			<h2>{{user}}</h2>
-		{{/user}}
-		{{#tech}}
-			<h2>{{tech}}</h2>
-		{{/tech}}
-		{{#admin}}
-			<h2>{{admin}}</h2>
-		{{/admin}}
-		<br />
-		<a href='/listaincidenciasadmin'>Listado de incidencias</a>
-		<br />
-		<a href='/nuevousuario'>A&ntilde;adir usuario</a>
 		<br />
 		<a href='/nuevaincidencia'>A&ntilde;adir incidencia</a>
 		<br />
+		<a href='/listaincidenciasadmin'>Listado de incidencias</a>
+		<br />
+		{{/user}}
+		{{#tech}}
+			<h2>{{tech}}</h2>
+		<br />
+		<a href='/nuevaincidencia'>A&ntilde;adir incidencia</a>
+		<br />
+		<a href='/listaincidenciasadmin'>Listado de incidencias</a>
+		<br />
+		{{/tech}}
+		{{#admin}}
+			<h2>{{admin}}</h2>
+		<a href='/nuevousuario'>A&ntilde;adir usuario</a>
+		<br />
+		<a href='/listaincidenciasadmin'>Listado de incidencias</a>
+		<br />
+		<a href='/nuevaincidencia'>A&ntilde;adir incidencia</a>
+		<br />
+		{{/admin}}
+
+		
+
 		<form action="/logout" method="post">
 		<input type="submit" value="Sign Out" />
 </form>

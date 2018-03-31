@@ -4,15 +4,71 @@
 	<title>Gestor de Incidencias</title>
 </head>
 <body>
+	<form action="/cierreincidencia" method="post">
 	<h2>Informaci&oacute;n de Incidencia:</h2>
+	{{#admin}}
 		{{#results}}
-		<h3>{{problema}}</h3>
-		{{informe}}
+	<hi> <li><b>Estado :</b>      	   <h3>	{{results.estado.estado}}</hi></h3></li><br />
+	<hi> <li><b>Id :</b> <input  type="text" size="3" value="{{results.id}}" name="id"></input></hi><br /></li>
+	<hi> <li><b>Problema :</b> {{problema}} </hi>
+    <hi> <li><b>Fecha de inicio :</b>    {{results.fechaInicio}}</hi><br /></li>
+    <hi> <li><b>Fecha de Cierre :</b>    {{results.fechaCierre}}</hi><br /></li>
+	<hi> <li><b>Problema :</b>           {{results.problema}}</hi><br/></li>
+	<hi> <li><b>Resoluci&oacute;n:</b> </hi></li>
+	<textarea type='text' name="solucion" rows="8" cols="50" >{{informe}}</textarea>
+	<br /> <input type="submit" name="modificar" text="" value="Guardar" />
+	<hi> <li><b>P&uacute;blica :</b>      {{results.isFaq}}</hi><br /></li>
+	<hi> <li><b>Usuario :</b>      	   	{{results.usuario.nombre}} {{results.usuario.apellidos}}</hi><br /></li>
 			
 		{{/results}}
-		
+	{{/admin}}	
+	{{#tech}}
+		{{#results}}
+	<hi> <li><b>Estado :</b>      	   <h3>	{{results.estado.estado}}</hi></h3></li><br />
+	<hi> <li><b>Id :</b> <input  type="text" size="3" value="{{results.id}}" name="id"></input></hi><br /></li>
+	<hi> <li><b>Problema :</b> {{problema}} </hi>
+    <hi> <li><b>Fecha de inicio :</b>    {{results.fechaInicio}}</hi><br /></li>
+    <hi> <li><b>Fecha de Cierre :</b>    {{results.fechaCierre}}</hi><br /></li>
+	<hi> <li><b>Problema :</b>           {{results.problema}}</hi><br/></li>
+	<hi> <li><b>Resoluci&oacute;n:</b> </hi></li>
+	<textarea type='text' name="solucion" rows="8" cols="50" >{{informe}}</textarea>
+	<br /> <input type="submit" name="modificar" text="" value="Guardar" />
+	<hi> <li><b>P&uacute;blica :</b>      {{results.isFaq}}</hi><br /></li>
+	<hi> <li><b>Usuario :</b>      	   	{{results.usuario.nombre}} {{results.usuario.apellidos}}</hi><br /></li>
+			
+		{{/results}}	
+	{{/tech}}	
+	{{#user}}	
+		{{#results}}
+	<hi> <li><b>Estado :</b>      	   <h3>	{{results.estado.estado}}</hi></h3></li><br />
+	<hi> <li><b>Id :</b> <input  type="text" size="3" value="{{results.id}}" name="id"></input></hi><br /></li>
+	<hi> <li><b>Problema :</b> {{problema}} </hi>
+	<hi> <li><b>Soluci&oacute;n :</b>    {{informe}}</hi><br /></li>
+    <hi> <li><b>Fecha de inicio :</b>    {{results.fechaInicio}}</hi><br /></li>
+    <hi> <li><b>Fecha de Cierre :</b>    {{results.fechaCierre}}</hi><br /></li>
+	<hi> <li><b>P&uacute;blica :</b>      {{results.isFaq}}</hi><br /></li>
+	<hi> <li><b>Usuario :</b>      	   	{{results.usuario.nombre}} {{results.usuario.apellidos}}</hi><br /></li>
+			
+		{{/results}}
+	{{/user}}
+	{{#publico}}
+		{{#results}}
+	<hi> <li><b>Estado :</b>      	   <h3>	{{results.estado.estado}}</hi></h3></li><br />
+	<hi> <li><b>Id :</b> <input  type="text" size="3" value="{{results.id}}" name="id"></input></hi><br /></li>
+	<hi> <li><b>Problema :</b> {{problema}} </hi>
+	<hi> <li><b>Soluci&oacute;n :</b>    {{informe}}</hi><br /></li>
+    <hi> <li><b>Fecha de inicio :</b>    {{results.fechaInicio}}</hi><br /></li>
+    <hi> <li><b>Fecha de Cierre :</b>    {{results.fechaCierre}}</hi><br /></li>
+	<hi> <li><b>P&uacute;blica :</b>      {{results.isFaq}}</hi><br /></li>
+	<hi> <li><b>Usuario :</b>      	   	{{results.usuario.nombre}} {{results.usuario.apellidos}}</hi><br /></li>
+			
+		{{/results}}
+	{{/publico}}		
+
 <br />
 <br />	
 <a href='/Volver'>Volver a la p&aacute;gina principal</a>
+</form>
 </body>
+
 </html>

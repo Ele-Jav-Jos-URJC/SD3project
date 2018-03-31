@@ -1,6 +1,7 @@
-package es.gestorincidencias.controladores;
 
+package es.gestorincidencias.controladores;
 import org.springframework.stereotype.Controller;
+import java.text.ParseException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,14 +45,58 @@ public class PublicController {
 		return "listaincidencias";
 	}
 	
-	@GetMapping("/incidencia")
+/*	@GetMapping("/incidencia")
 	public String cargarIncidencia(Model model,@RequestParam String id) {
 		Incidencia incidencia=publicService.getIncidencia(id);
 		model.addAttribute("results",incidencia);
 		return "incidencia";
 	}
+*/
+	@GetMapping("/incidencia")
+	public String cargarIncidencia(Model model,@RequestParam String id,Usuario usuario,HttpServletRequest request) {
+	//		return "incidencia";
+		Incidencia incidencia=publicService.getIncidencia(id);
+		if(request.isUserInRole("ADMIN") || request.isUserInRole("TECH") || request.isUserInRole("USER")) {
+			if(request.isUserInRole("ADMIN")) {
+				model.addAttribute("results",incidencia);
+				model.addAttribute("admin","Rol administrador");
+				
+			}else if (request.isUserInRole("TECH")) {
+				model.addAttribute("tech","Rol técnico");
+				model.addAttribute("results",incidencia);
+			}else {
+				model.addAttribute("user","Rol usuario");
+				model.addAttribute("results",incidencia);
+			}
+			return "/incidencia";
+		}else
+			{
+			model.addAttribute("publico","Zona pública");
+			model.addAttribute("results",incidencia);
+			return "incidencia";
+			}
+	}
+	@RequestMapping("/cierreincidencia")
+	public String cierreIncidencia(Model model,@RequestParam String solucion,@RequestParam String id) {
+		
+		Incidencia incidencia=publicService.getIncidencia(id);
+		 
+		incidencia=publicService.setIncidencia(solucion,incidencia);
+			return "/datosexito";
+
+	}
+	
+	
 
 	
+	/**
+	 * @param nombre
+	 * @param apellido
+	 * @param mail
+	 * @param pass
+	 * @param rol
+	 * @return
+	 */
 	@RequestMapping("/grabausuario")
 	public String grabaUsuario(@RequestParam String nombre,@RequestParam String apellido,@RequestParam String mail,@RequestParam String pass,@RequestParam String rol) {
 
@@ -61,7 +106,7 @@ public class PublicController {
 	}
 	
 	@RequestMapping("/guardarincidencia")
-	public String altaIncidencia(Model model,@RequestParam String problema, @RequestParam String categoria,@RequestParam boolean gender) {
+	public String altaIncidencia(Model model,@RequestParam String problema, @RequestParam String categoria,@RequestParam boolean gender) throws ParseException {
 
 		Incidencia inci= publicService.setIncidencia(problema,categoria,gender);
 		model.addAttribute("results",inci);
@@ -87,8 +132,15 @@ public class PublicController {
 	}
 	
 	@RequestMapping("/Volver")
-	public String volver(Usuario usuario,HttpServletRequest request) {
+	public String volver(Model model,Usuario usuario,HttpServletRequest request) {
 		if(request.isUserInRole("ADMIN") || request.isUserInRole("TECH") || request.isUserInRole("USER")) {
+			if(request.isUserInRole("ADMIN")) {
+				model.addAttribute("admin","Rol administrador");
+			}else if (request.isUserInRole("TECH")) {
+				model.addAttribute("tech","Rol técnico");
+			}else {
+				model.addAttribute("user","Rol usuario");
+			}
 			return "/inipage";
 		}else
 			{
