@@ -26,6 +26,10 @@ public class PublicService {
 	private PrioridadRepositorio prioridadRepo;
 	@Autowired
 	private UsuarioRepository usuarioRepo;
+	@Autowired
+	private RolUsuarioRepository rolusuarioRepo;
+
+
 	
 
 	public List<CategoriaIncidencia> getCategorias(){
@@ -52,6 +56,18 @@ public class PublicService {
 	public Incidencia getIncidencia(Incidencia incidencia) {
 		long idNum=incidencia.getId();
 		return incidenciaRepo.findOne(idNum);
+	}
+	
+	// Graba un usuario
+	public Usuario setUsuario (String nombre,String apellido,String mail,String pass,String rol) 
+	{
+		Usuario usuario=new Usuario(nombre,apellido,mail,pass);
+		RolUsuario rolusuario= new RolUsuario(rol);
+		rolusuario=rolusuarioRepo.findByrol(rol);
+		usuario.setRol(rolusuario);
+		usuarioRepo.save(usuario);
+		return usuario;
+		
 	}
 	
 	public Incidencia setIncidencia(String problema,String categoria,boolean esfaq) {
