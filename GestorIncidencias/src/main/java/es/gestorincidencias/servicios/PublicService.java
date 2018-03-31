@@ -70,6 +70,14 @@ public class PublicService {
 		
 	}
 	
+/*	//Devuelve un usuario
+	public Usuario getusuario (Long id) {
+		Usuario usuario=new Usuario();
+		usuarioRepo.findById(id);
+		
+		return usuario;
+	}*/
+	
 	public Incidencia setIncidencia(String problema,String categoria,boolean esfaq) {
 	
 	//int num=getCategoria(categoria);
@@ -89,12 +97,18 @@ public class PublicService {
 	inci.setFaq(esfaq);
 	inci.setFechaInicio(fecha);
 	inci.setUsuario(usuario);
+	inci.setInforme("");
 	incidenciaRepo.save(inci);
 
 
 		
 	return inci;
 		
+	}
+	public List<Incidencia> getIncidencias(){
+		
+		
+		return incidenciaRepo.findAll();
 	}
 
 	public List<Incidencia> getFaqBySearch(String search) {

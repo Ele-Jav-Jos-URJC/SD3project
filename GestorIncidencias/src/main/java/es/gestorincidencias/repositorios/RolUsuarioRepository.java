@@ -7,4 +7,5 @@ import es.gestorincidencias.entidades.RolUsuario;
 public interface RolUsuarioRepository extends JpaRepository<RolUsuario, Integer> {
 
 	RolUsuario findByrol(String rol);
+
 }

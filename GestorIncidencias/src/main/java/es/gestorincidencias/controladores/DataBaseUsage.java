@@ -93,9 +93,9 @@ public class DataBaseUsage implements CommandLineRunner{
 				Date ahora=new Date();
 				//SimpleDateFormat formatoFecha= new SimpleDateFormat("yyyy-MM-dd");
 				//el usuario1 crea cuatro incidencias
-				Incidencia inc1=new Incidencia(us1,ahora, "problema1", baja,pendiente);
-				Incidencia inc2=new Incidencia(us1,ahora, "probleam2", baja,pendiente);
-				Incidencia inc3=new Incidencia(us1,ahora,"problema3", alta,pendiente);
+				Incidencia inc1=new Incidencia(us1,ahora,"problema1",baja,pendiente);
+				Incidencia inc2=new Incidencia(us1,ahora,"probleam2",baja,pendiente);
+				Incidencia inc3=new Incidencia(us1,ahora,"problema3",alta,pendiente);
 				Incidencia inc4=new Incidencia(us1,ahora,"problema4",baja, pendiente);
 				incidenciaRepo.save(inc1);
 				incidenciaRepo.save(inc2);
@@ -118,6 +118,10 @@ public class DataBaseUsage implements CommandLineRunner{
 				//la incidencia 3 es cerrada
 				//incluye la solución
 				inc3.setInforme("he solucionado la incidencia 3");
+				//No incluyen la solución
+				inc1.setInforme("En proceso ");
+				inc2.setInforme("En proceso ");
+				inc4.setInforme("En proceso ");
 				//incluye la fecha
 				inc3.setFechaCierre(new Date());
 				//cierro la incidencia

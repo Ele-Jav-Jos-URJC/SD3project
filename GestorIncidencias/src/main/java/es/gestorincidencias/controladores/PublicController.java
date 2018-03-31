@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import es.gestorincidencias.servicios.PublicService;
 import es.gestorincidencias.entidades.*;
 import java.util.Date;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author CAN
@@ -52,7 +53,7 @@ public class PublicController {
 
 	
 	@RequestMapping("/grabausuario")
-	public String GrabaUsuario(@RequestParam String nombre,@RequestParam String apellido,@RequestParam String mail,@RequestParam String pass,@RequestParam String rol) {
+	public String grabaUsuario(@RequestParam String nombre,@RequestParam String apellido,@RequestParam String mail,@RequestParam String pass,@RequestParam String rol) {
 
 		Usuario usuario= publicService.setUsuario(nombre,apellido,mail,pass,rol);
 	//	model.addAttribute("results",usuario);
@@ -60,7 +61,7 @@ public class PublicController {
 	}
 	
 	@RequestMapping("/guardarincidencia")
-	public String AltaIncidencia(Model model,@RequestParam String problema, @RequestParam String categoria,@RequestParam boolean gender) {
+	public String altaIncidencia(Model model,@RequestParam String problema, @RequestParam String categoria,@RequestParam boolean gender) {
 
 		Incidencia inci= publicService.setIncidencia(problema,categoria,gender);
 		model.addAttribute("results",inci);
@@ -68,20 +69,38 @@ public class PublicController {
 	}
 
 	@RequestMapping("/nuevousuario")
-	public String AltaUsuario(Model model) {
+	public String altaUsuario(Model model) {
 
 		return "nuevousuario";
 	}
 	
 	@RequestMapping("/nuevaincidencia")
-	public String AltaIncidencia(Model model) {
+	public String altaIncidencia(Model model) {
 
 		return "nuevaincidencia";
 	}
 	
 	@RequestMapping("/listaincidencias")
-	public String ListaIncidencia(Model model) {
+	public String listaIncidencia(Model model) {
 
+		return "listaincidencias";
+	}
+	
+	@RequestMapping("/Volver")
+	public String volver(Usuario usuario,HttpServletRequest request) {
+		if(request.isUserInRole("ADMIN") || request.isUserInRole("TECH") || request.isUserInRole("USER")) {
+			return "/inipage";
+		}else
+			{
+			return "/";
+			}
+	}
+	
+	@GetMapping("/listaincidenciasadmin")
+	public String listaIncidenciaAdmin(Model model) {
+		List<Incidencia> incidencias=publicService.getIncidencias();
+		model.addAttribute("results",incidencias);
+	
 		return "listaincidencias";
 	}
 	

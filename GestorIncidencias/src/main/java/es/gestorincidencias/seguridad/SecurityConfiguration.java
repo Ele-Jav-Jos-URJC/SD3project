@@ -20,14 +20,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		http.authorizeRequests().antMatchers("/").permitAll();
 		http.authorizeRequests().antMatchers("/prueba").permitAll();
 		http.authorizeRequests().antMatchers("/incidencias").permitAll();
-		http.authorizeRequests().antMatchers("/guardarincidencia").permitAll();
 		http.authorizeRequests().antMatchers("/listaincidencias").permitAll();
 		http.authorizeRequests().antMatchers("/login").permitAll();
 		http.authorizeRequests().antMatchers("/logout").permitAll();
 		http.authorizeRequests().antMatchers("/loginerror").permitAll();
 		
+		http.authorizeRequests().antMatchers("/datosexito").hasAnyRole("USER","ADMIN","TECH");
+		http.authorizeRequests().antMatchers("/nuevaincidencia").hasAnyRole("USER","ADMIN","TECH");
+		http.authorizeRequests().antMatchers("/nuevousuario").hasAnyRole("USER","ADMIN","TECH");
+		http.authorizeRequests().antMatchers("/guardarincidencia").hasAnyRole("USER","ADMIN","TECH");
 		http.authorizeRequests().antMatchers("/inipage").hasAnyRole("USER","ADMIN","TECH");
 		//http.authorizeRequests().anyRequest().authenticated();
+		
+		http.authorizeRequests().antMatchers("/incidencias").permitAll();
 		
 		http.formLogin().loginPage("/login");
 		http.formLogin().usernameParameter("usuario");

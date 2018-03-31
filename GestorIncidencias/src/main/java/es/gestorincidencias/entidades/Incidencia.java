@@ -40,8 +40,9 @@ public class Incidencia {
 	public Incidencia() {};
 	
 
-	public Incidencia(Usuario usuario,Date fechaInicio, String problema, PrioridadIncidencia prioridad,EstadoIncidencia estado) {
+	public Incidencia(Usuario usuario,Date fechaInicio, String problema,PrioridadIncidencia prioridad,EstadoIncidencia estado) {
 		super();
+		
 		this.usuario=usuario;
 		this.fechaInicio = fechaInicio;
 		this.problema = problema;
