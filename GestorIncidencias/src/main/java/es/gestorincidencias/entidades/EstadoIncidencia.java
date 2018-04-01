@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class EstadoIncidencia {
 	@Id
@@ -16,8 +18,9 @@ public class EstadoIncidencia {
 	private String estado;
 	private String correo;
 	
-	/*@OneToMany
-	private List<Incidencia> incidencias;*/
+	@OneToMany
+	@JsonIgnore
+	private List<Incidencia> incidencias;
 	
 	public EstadoIncidencia() {}
 	
@@ -51,13 +54,13 @@ public class EstadoIncidencia {
 		this.correo = correo;
 	}
 
-	/*public List<Incidencia> getIncidencias() {
+	public List<Incidencia> getIncidencias() {
 		return incidencias;
 	}
 
 	public void setIncidencias(List<Incidencia> incidencias) {
 		this.incidencias = incidencias;
-	}*/
+	}
 	
 	
 	

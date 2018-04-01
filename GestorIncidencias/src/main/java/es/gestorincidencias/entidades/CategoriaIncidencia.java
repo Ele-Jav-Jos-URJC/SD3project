@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 public class CategoriaIncidencia {
@@ -19,6 +21,7 @@ public class CategoriaIncidencia {
 	private String categoria;
 	
 	@ManyToMany(mappedBy="categorias")
+	@JsonIgnore
 	private List<Incidencia> incidecncias;
 	
 	public CategoriaIncidencia() {}

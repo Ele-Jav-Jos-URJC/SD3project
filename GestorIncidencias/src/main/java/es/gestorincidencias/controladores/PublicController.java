@@ -11,17 +11,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import es.gestorincidencias.servicios.PublicService;
 import es.gestorincidencias.entidades.*;
+import es.gestorincidencias.rest.cliente.IncidenciasCliente;
+
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author CAN
- *
+ *@author Javier Aparicio
  */
 @Controller
 public class PublicController {
+	
+	private static final String SERVER="https://localhost:8443";
+	
 	@Autowired
 	private PublicService publicService;
+	
+	@Autowired
+	private IncidenciasCliente incidenciaClient;
 	
 	@RequestMapping("/")
 	public String cargarIndex(Model model) {
@@ -33,14 +41,15 @@ public class PublicController {
 	@GetMapping("/search")
 	public String buscarIncidencia(Model model, @RequestParam String busqueda) {
 		List<Incidencia> incidencias=publicService.getFaqBySearch(busqueda);
+		//List<Incidencia> incidencias=incidenciaClient.getLista(SERVER+"/v1/incidencias/faqssearch/"+busqueda);
 		model.addAttribute("results",incidencias);
 		return "listaincidencias";
 
 	}
 	
 	@GetMapping("/categoria")
-	public String cargarListadoFaq(Model model,@RequestParam String id) {
-		List<Incidencia> incidencias=publicService.getFaq(id);
+	public String cargarListadoFaq(Model model,@RequestParam int id) {
+		List<Incidencia> incidencias=publicService.getFaqByCategoria(id);
 		model.addAttribute("results",incidencias);
 		return "listaincidencias";
 	}
@@ -53,7 +62,7 @@ public class PublicController {
 	}
 */
 	@GetMapping("/incidencia")
-	public String cargarIncidencia(Model model,@RequestParam String id,Usuario usuario,HttpServletRequest request) {
+	public String cargarIncidencia(Model model,@RequestParam long id,Usuario usuario,HttpServletRequest request) {
 	//		return "incidencia";
 		Incidencia incidencia=publicService.getIncidencia(id);
 		if(request.isUserInRole("ADMIN") || request.isUserInRole("TECH") || request.isUserInRole("USER")) {
@@ -77,7 +86,7 @@ public class PublicController {
 			}
 	}
 	@RequestMapping("/cierreincidencia")
-	public String cierreIncidencia(Model model,@RequestParam String solucion,@RequestParam String id) {
+	public String cierreIncidencia(Model model,@RequestParam String solucion,@RequestParam long id) {
 		
 		Incidencia incidencia=publicService.getIncidencia(id);
 		 

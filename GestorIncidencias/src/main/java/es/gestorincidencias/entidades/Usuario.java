@@ -12,8 +12,13 @@ import javax.persistence.OneToMany;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+
+
 @Entity
 public class Usuario {
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
@@ -21,11 +26,13 @@ public class Usuario {
 	private String nombre;
 	private String apellidos;
 	private String email;
+	
 	private String pass;
 
 	
-	/*@OneToMany
-	private List<Incidencia> incidencias;*/
+	@OneToMany(mappedBy="usuario")
+	@JsonIgnore
+	private List<Incidencia> incidencias;
 	
 	@ManyToOne()
 	private RolUsuario rol;
@@ -74,7 +81,7 @@ public class Usuario {
 	}
 
 
-	/*public List<Incidencia> getIncidencias() {
+	public List<Incidencia> getIncidencias() {
 		return incidencias;
 	}
 
@@ -88,7 +95,7 @@ public class Usuario {
 			this.incidencias=new ArrayList<Incidencia>();
 		}
 		this.incidencias.add(incidencia);
-	}*/
+	}
 	public RolUsuario getRol() {
 		return rol;
 	}

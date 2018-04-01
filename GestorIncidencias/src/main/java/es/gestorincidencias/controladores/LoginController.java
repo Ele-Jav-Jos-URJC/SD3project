@@ -9,7 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import es.gestorincidencias.repositorios.UsuarioRepository;
-
+/**
+ * controlador para a auntetificación de usuarios
+ * @author Javier Aparicio
+ *
+ */
 @Controller
 public class LoginController {
 

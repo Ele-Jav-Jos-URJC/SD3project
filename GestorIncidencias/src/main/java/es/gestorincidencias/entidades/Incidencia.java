@@ -12,16 +12,25 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 
 @Entity
 public class Incidencia {
+	public interface Principal{}
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@JsonView(Principal.class)
 	private long id;
+	@JsonView(Principal.class)
 	private Date fechaInicio;
+	@JsonView(Principal.class)
 	private String problema;
+	@JsonView(Principal.class)
 	private String informe;
+	@JsonView(Principal.class)
 	private Date fechaCierre;
+	@JsonView(Principal.class)
 	private boolean isFaq;
 	
 	@ManyToOne

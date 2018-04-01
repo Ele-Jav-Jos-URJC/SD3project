@@ -32,32 +32,71 @@ public class PublicService {
 
 
 	
-
+	/**
+	 * Pide a la base de datos todas las categorias
+	 * @return List<CategoriaIncidencia>
+	 */
 	public List<CategoriaIncidencia> getCategorias(){
 		return categoriaRepo.findAll();
 	}
 
+	
 	public int getCategoria(String categoria){
 		
 		int num=getCategoria(categoria);
 		return num;
 	}
-	public List<Incidencia> getFaq(String id) {
-		int idNum=Integer.parseInt(id);
-		CategoriaIncidencia categoria=categoriaRepo.findOne(idNum);
+	
+	
+	/**
+	 * Pide a la BD un listado de incidencias identificadas como FAQ's peretenecientes a una categoría 
+	 * @param id
+	 * @return List<Incidencia>
+	 */
+	public List<Incidencia> getFaqByCategoria(int id) {
+		//int idNum=Integer.parseInt(id);
+		CategoriaIncidencia categoria=categoriaRepo.findOne(id);
 		return incidenciaRepo.findDisctinctByCategoriasAndIsFaq(categoria,true);
 	}
-
+	/**
+	 * Pide a la BD un listado de incidencias identificadas como FAQ's peretenecientes a una categoría 
+	 * @param Nombre categoría
+	 * @return List<Incidencia>
+	 */
+	public List<Incidencia> getFaqByCategoria(String categoria) {
+		CategoriaIncidencia categoriaIncidencia=categoriaRepo.findDistinctByCategoria(categoria);
+		//return incidenciaRepo.findDisctinctByCategoriasAndIsFaq(categoriaIncidencia,true);
+		return categoriaIncidencia.getIncidecncias();
+	}
+/**
+ *  Pide a la BD un listado de incidencias peretenecientes a una categoría
+ * @param categoria
+ * @return
+ */
+	public List<Incidencia> getIncidenciasByCategoria(String categoria) {
+		CategoriaIncidencia categoriaIncidencia=categoriaRepo.findDistinctByCategoria(categoria);
+		return categoriaIncidencia.getIncidecncias();
+	}
 	
-	public Incidencia getIncidencia(String id) {
+	/*public Incidencia getIncidencia(String id) {
 		long idNum=Long.parseLong(id);
 		return incidenciaRepo.findOne(idNum);
+	}*/
+	
+	public Incidencia getIncidencia(long id) {
+		return incidenciaRepo.findOne(id);
 	}
+	
 	public Incidencia getIncidencia(Incidencia incidencia) {
 		long idNum=incidencia.getId();
 		return incidenciaRepo.findOne(idNum);
 	}
 
+	public List<Incidencia> getIncidenciasByUser(long id){
+		Usuario usuario=usuarioRepo.findOne(id);
+		//return incidenciaRepo.findDistinctByUsuario( usuario);
+		return usuario.getIncidencias();
+	}
 	
 	// Graba un usuario
 	public Usuario setUsuario (String nombre,String apellido,String mail,String pass,String rol) 
@@ -128,12 +167,19 @@ public class PublicService {
 	return incidencia;
 		
 	}
+	/**
+	 * Pide a la BD el listado completo de las incidencias
+	 * @return list <incidencia>
+	 */
 	public List<Incidencia> getIncidencias(){
-		
-		
 		return incidenciaRepo.findAll();
 	}
-
+	/**
+	 * Pide a la BD un listado de incidencias clasificadas como FAQ's que tienen en el campo problema
+	 * la cadena pasada en search
+	 * @param search
+	 * @return List<Incidencia>
+	 */
 	public List<Incidencia> getFaqBySearch(String search) {
 		return incidenciaRepo.findLikeProblemaAndIsFaq(search,true);
 	}

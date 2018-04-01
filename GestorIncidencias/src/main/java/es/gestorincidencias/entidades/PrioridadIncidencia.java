@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class PrioridadIncidencia {
 	@Id
@@ -16,8 +18,9 @@ public class PrioridadIncidencia {
 	
 	private String prioridad;
 	
-	/*@OneToMany
-	private List<Incidencia> incidencias;*/
+	@OneToMany
+	@JsonIgnore
+	private List<Incidencia> incidencias;
 	
 	public PrioridadIncidencia() {};
 	
@@ -41,13 +44,13 @@ public class PrioridadIncidencia {
 		this.id = id;
 	}
 
-	/*public List<Incidencia> getIncidencias() {
+	public List<Incidencia> getIncidencias() {
 		return incidencias;
 	}
 
 	public void setIncidencias(List<Incidencia> incidencias) {
 		this.incidencias = incidencias;
-	}*/
+	}
 	
 	
 }
