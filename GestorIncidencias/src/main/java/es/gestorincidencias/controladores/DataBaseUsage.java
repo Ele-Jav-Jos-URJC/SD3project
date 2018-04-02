@@ -127,7 +127,7 @@ public class DataBaseUsage implements CommandLineRunner{
 				//cierro la incidencia
 				inc3.setEstado(cerrada);
 				//clasifica la incidencia
-				inc3.setCategorias(red);
+				inc3.setCategoria(red);
 				//la marco como faq para que se muestre en publico
 				inc3.setFaq(true);
 				incidenciaRepo.save(inc3);

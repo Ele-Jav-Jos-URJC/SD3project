@@ -21,7 +21,7 @@ import es.gestorincidencias.entidades.Incidencia;
 import es.gestorincidencias.entidades.Usuario;
 import es.gestorincidencias.servicios.PublicService;
 @RestController
-@RequestMapping (value="/v1")
+@RequestMapping (value="/v1/incidencias")
 public class IncidenciasController {
 
 	@Autowired
@@ -32,7 +32,7 @@ public class IncidenciasController {
 	 * @return List<Incidencia>
 	 */
 	@JsonView(Incidencia.Principal.class)
-	@RequestMapping (value="/incidencias", method=RequestMethod.GET)
+	@RequestMapping (value="", method=RequestMethod.GET)
 	public List<Incidencia> getIncidencias(){
 		return pService.getIncidencias();
 	}
@@ -43,7 +43,7 @@ public class IncidenciasController {
 	 * @return Incidencia
 	 */
 	@JsonView(Incidencia.Principal.class)
-	@RequestMapping (value="/incidencias/item/{idIncidencia}", method=RequestMethod.GET)
+	@RequestMapping (value="/item/{idIncidencia}", method=RequestMethod.GET)
 	public Incidencia getIncidencias(@PathVariable ("idIncidencia") long idIncidencia){
 		return pService.getIncidencia(idIncidencia);
 	}
@@ -53,7 +53,7 @@ public class IncidenciasController {
 	 * @return
 	 */
 	@JsonView(Incidencia.Principal.class)
-	@RequestMapping (value="/incidencias/{categoria}", method=RequestMethod.GET)
+	@RequestMapping (value="/{categoria}", method=RequestMethod.GET)
 	public List<Incidencia> getIncidencias(@PathVariable("categoria") String categoria){
 		return pService.getIncidenciasByCategoria(categoria);
 	}
@@ -64,7 +64,7 @@ public class IncidenciasController {
 	 * @return
 	 */
 	@JsonView(Incidencia.Principal.class)
-	@RequestMapping (value="/incidencias/faqs/{categoria}", method=RequestMethod.GET)
+	@RequestMapping (value="/faqs/{categoria}", method=RequestMethod.GET)
 	public List<Incidencia> getFaqs(@PathVariable("categoria") String categoria){
 		return pService.getFaqByCategoria(categoria);
 	}
@@ -75,7 +75,7 @@ public class IncidenciasController {
 	 * @return
 	 */
 	@JsonView(Incidencia.Principal.class)
-	@RequestMapping (value="/incidencias/faqssearch/{search}", method=RequestMethod.GET)
+	@RequestMapping (value="/faqssearch/{search}", method=RequestMethod.GET)
 	public List<Incidencia> getFaqsBySearch(@PathVariable("search") String search){
 		return pService.getFaqBySearch(search);
 	}
@@ -86,7 +86,7 @@ public class IncidenciasController {
 	 * @return List<Incidencia>
 	 */
 	@JsonView(Incidencia.Principal.class)
-	@RequestMapping (value="/incidencias/user/{user}", method=RequestMethod.GET)
+	@RequestMapping (value="/user/{user}", method=RequestMethod.GET)
 	public List<Incidencia> getIncidenciasByUser(@PathVariable("user") long id){
 		return pService.getIncidenciasByUser(id);
 	}

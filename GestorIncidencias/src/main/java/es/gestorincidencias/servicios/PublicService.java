@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import es.gestorincidencias.entidades.*;
 import es.gestorincidencias.repositorios.*;
@@ -39,7 +41,13 @@ public class PublicService {
 	public List<CategoriaIncidencia> getCategorias(){
 		return categoriaRepo.findAll();
 	}
-
+	/**
+	 * Pide a la base de datos la categoria por su id
+	 * @return ategoriaIncidencia
+	 */
+	public CategoriaIncidencia getCategoria(int idCategoria){
+		return categoriaRepo.findOne(idCategoria);
+	}
 	
 	public int getCategoria(String categoria){
 		
@@ -56,7 +64,7 @@ public class PublicService {
 	public List<Incidencia> getFaqByCategoria(int id) {
 		//int idNum=Integer.parseInt(id);
 		CategoriaIncidencia categoria=categoriaRepo.findOne(id);
-		return incidenciaRepo.findDisctinctByCategoriasAndIsFaq(categoria,true);
+		return incidenciaRepo.findDisctinctByCategoriaAndIsFaq(categoria,true);
 	}
 	/**
 	 * Pide a la BD un listado de incidencias identificadas como FAQ's peretenecientes a una categoría 
@@ -65,9 +73,10 @@ public class PublicService {
 	 */
 	public List<Incidencia> getFaqByCategoria(String categoria) {
 		CategoriaIncidencia categoriaIncidencia=categoriaRepo.findDistinctByCategoria(categoria);
-		//return incidenciaRepo.findDisctinctByCategoriasAndIsFaq(categoriaIncidencia,true);
+		
 		return categoriaIncidencia.getIncidecncias();
 	}
+	
 /**
  *  Pide a la BD un listado de incidencias peretenecientes a una categoría
  * @param categoria
@@ -96,6 +105,11 @@ public class PublicService {
 		Usuario usuario=usuarioRepo.findOne(id);
 		//return incidenciaRepo.findDistinctByUsuario( usuario);
 		return usuario.getIncidencias();
+	}
+	
+	public List<Incidencia> getIncidenciasByTech(List<Usuario> tecnicos){
+		
+		return incidenciaRepo.findDisctinctByTecnicos(tecnicos);
 	}
 	
 	// Graba un usuario
@@ -161,18 +175,23 @@ public class PublicService {
 	//incidencia.setUsuario(usuario);
 	incidencia.setInforme(informe);
 	incidenciaRepo.save(incidencia);
-
-
-		
 	return incidencia;
 		
 	}
 	/**
 	 * Pide a la BD el listado completo de las incidencias
-	 * @return list <incidencia>
+	 * @return List<incidencia>
 	 */
 	public List<Incidencia> getIncidencias(){
 		return incidenciaRepo.findAll();
+	}
+	/** Pide a la BD el listado de incidencias pendientes
+	 * 
+	 * @return List<Incidencia>
+	 */
+	public List<Incidencia> getIncidenciasPendientes(){
+		EstadoIncidencia estado=estadoRepo.findOne(1);
+		return incidenciaRepo.findByEstado(estado);
 	}
 	/**
 	 * Pide a la BD un listado de incidencias clasificadas como FAQ's que tienen en el campo problema
@@ -183,6 +202,22 @@ public class PublicService {
 	public List<Incidencia> getFaqBySearch(String search) {
 		return incidenciaRepo.findLikeProblemaAndIsFaq(search,true);
 	}
+	/**
+	 * Pide a la BD los diferentes tipos de rioridades
+	 * @return List<PrioridadIncidencia>
+	 */
+	public List<PrioridadIncidencia> getAllPrioridad() {
+		return prioridadRepo.findAll();
+	}
 	
+	public Usuario getLogUser() {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String userName="";
+		if (principal instanceof String) {
+		  userName = (String) principal;
+		}
+		
+		return usuarioRepo.findByEmail(userName);
+	}
 
 }

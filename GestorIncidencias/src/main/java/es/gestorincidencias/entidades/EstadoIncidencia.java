@@ -18,7 +18,7 @@ public class EstadoIncidencia {
 	private String estado;
 	private String correo;
 	
-	@OneToMany
+	@OneToMany(mappedBy="estado")
 	@JsonIgnore
 	private List<Incidencia> incidencias;
 	
