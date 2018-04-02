@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -20,9 +21,9 @@ public class CategoriaIncidencia {
 	
 	private String categoria;
 	
-	@ManyToMany(mappedBy="categorias")
+	@OneToMany(mappedBy="categoria")
 	@JsonIgnore
-	private List<Incidencia> incidecncias;
+	private List<Incidencia> incidencias;
 	
 	public CategoriaIncidencia() {}
 
@@ -60,13 +61,13 @@ public class CategoriaIncidencia {
 
 
 	public List<Incidencia> getIncidecncias() {
-		return incidecncias;
+		return incidencias;
 	}
 
 
 
 	public void setIncidecncias(List<Incidencia> incidecncias) {
-		this.incidecncias = incidecncias;
+		this.incidencias = incidecncias;
 	}
 	
 	

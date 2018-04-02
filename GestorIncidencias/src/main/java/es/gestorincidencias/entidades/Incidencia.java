@@ -43,8 +43,8 @@ public class Incidencia {
 	private PrioridadIncidencia prioridad;
 	@ManyToOne
 	private EstadoIncidencia estado;
-	@ManyToMany
-	private List<CategoriaIncidencia> categorias;
+	@ManyToOne
+	private CategoriaIncidencia categoria;
 	
 	public Incidencia() {};
 	
@@ -168,20 +168,15 @@ public class Incidencia {
 	}
 
 
-	public List<CategoriaIncidencia> getCategorias() {
-		return categorias;
+	public CategoriaIncidencia getCategoria() {
+		return categoria;
 	}
 
 
-	public void setCategorias(List<CategoriaIncidencia> categorias) {
-		this.categorias = categorias;
+	public void setCategoria(CategoriaIncidencia categoria) {
+		this.categoria = categoria;
 	}
-	public void setCategorias(CategoriaIncidencia categoria) {
-		if(this.categorias==null) {
-			this.categorias=new ArrayList<CategoriaIncidencia>();
-		}
-		this.categorias.add(categoria);
-	}
+	
 	
 	
 }

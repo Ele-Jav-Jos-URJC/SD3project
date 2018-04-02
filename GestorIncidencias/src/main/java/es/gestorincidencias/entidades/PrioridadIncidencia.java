@@ -18,7 +18,7 @@ public class PrioridadIncidencia {
 	
 	private String prioridad;
 	
-	@OneToMany
+	@OneToMany(mappedBy="prioridad")
 	@JsonIgnore
 	private List<Incidencia> incidencias;
 	
