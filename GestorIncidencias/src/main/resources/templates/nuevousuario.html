@@ -30,6 +30,7 @@
 		</select>
 		</select> <br />
 		<br /> <input type="submit" text="" value="A&ntilde;adir" />
+		<input type="hidden" name= "_csrf" value="{{token}}" /> 
 	
 		
 	
@@ -37,5 +38,6 @@
 	</form>
 	<form action="/logout" method="post">
 		<input type="submit" value="Sign Out" />
+		<input type="hidden" name= "_csrf" value="{{token}}" /> 
 </body>
 </html>

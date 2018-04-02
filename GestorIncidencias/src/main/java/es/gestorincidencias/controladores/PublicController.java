@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import es.gestorincidencias.servicios.PublicService;
 import es.gestorincidencias.entidades.*;
 import es.gestorincidencias.rest.cliente.IncidenciasCliente;
-
+import org.springframework.security.web.csrf.CsrfToken;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,6 +30,7 @@ public class PublicController {
 	
 	@Autowired
 	private IncidenciasCliente incidenciaClient;
+	
 	
 	@RequestMapping("/")
 	public String cargarIndex(Model model) {
@@ -115,22 +116,27 @@ public class PublicController {
 	}
 	
 	@RequestMapping("/guardarincidencia")
-	public String altaIncidencia(Model model,@RequestParam String problema, @RequestParam String categoria,@RequestParam boolean gender) throws ParseException {
-
+	public String altaIncidencia(Model model,@RequestParam String problema, @RequestParam String categoria,@RequestParam boolean gender,HttpServletRequest request) throws ParseException {
+		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+			
 		Incidencia inci= publicService.setIncidencia(problema,categoria,gender);
 		model.addAttribute("results",inci);
+		model.addAttribute("token", token.getToken());
 		return "confirmacion";
 	}
 
 	@RequestMapping("/nuevousuario")
-	public String altaUsuario(Model model) {
+	public String altaUsuario(Model model,HttpServletRequest request) {
+		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+		model.addAttribute("token", token.getToken());
 
 		return "nuevousuario";
 	}
 	
 	@RequestMapping("/nuevaincidencia")
-	public String altaIncidencia(Model model) {
-
+	public String altaIncidencia(Model model,HttpServletRequest request) {
+		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+		model.addAttribute("token", token.getToken());
 		return "nuevaincidencia";
 	}
 	
@@ -142,13 +148,19 @@ public class PublicController {
 	
 	@RequestMapping("/Volver")
 	public String volver(Model model,Usuario usuario,HttpServletRequest request) {
+		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
 		if(request.isUserInRole("ADMIN") || request.isUserInRole("TECH") || request.isUserInRole("USER")) {
 			if(request.isUserInRole("ADMIN")) {
 				model.addAttribute("admin","Rol administrador");
+				 
+				
+				model.addAttribute("token", token.getToken());
 			}else if (request.isUserInRole("TECH")) {
 				model.addAttribute("tech","Rol técnico");
+				model.addAttribute("token", token.getToken());
 			}else {
 				model.addAttribute("user","Rol usuario");
+				model.addAttribute("token", token.getToken());
 			}
 			return "/inipage";
 		}else

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import es.gestorincidencias.seguridad.*;
+import org.springframework.security.web.csrf.CsrfToken;
 
 import es.gestorincidencias.repositorios.UsuarioRepository;
 /**
@@ -21,17 +23,24 @@ public class LoginController {
 	private UsuarioRepository userRepo;
 	
 	@RequestMapping("/login")
-	public String getLogin() {
+	public String getLogin(Model model, HttpServletRequest request) {
+		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+		model.addAttribute("token", token.getToken());
 		return "logeo";
 	}
 	
 	@RequestMapping("/loginerror")
-	public String getLoginError() {
+	public String getLoginError(Model model, HttpServletRequest request) {
+		 
+			CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+			model.addAttribute("token", token.getToken());
 		return "loginerror";
 	}
 	
 	@GetMapping("/inipage")
 	public String getloginini(Model model, HttpServletRequest request) {
+			CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+			model.addAttribute("token", token.getToken());
 		
 		if(request.isUserInRole("ADMIN")) {
 			model.addAttribute("admin","Rol administrador");
