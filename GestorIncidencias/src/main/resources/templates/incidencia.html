@@ -10,13 +10,13 @@
 		{{#results}}
 	<hi> <li><b>Estado :</b>      	   <h3>	{{results.estado.estado}}</hi></h3></li><br />
 	<hi> <li><b>Id :</b> <input  type="text" size="3" value="{{results.id}}" name="id"></input></hi><br /></li>
-	<hi> <li><b>Problema :</b> {{problema}} </hi>
     <hi> <li><b>Fecha de inicio :</b>    {{results.fechaInicio}}</hi><br /></li>
     <hi> <li><b>Fecha de Cierre :</b>    {{results.fechaCierre}}</hi><br /></li>
 	<hi> <li><b>Problema :</b>           {{results.problema}}</hi><br/></li>
 	<hi> <li><b>Resoluci&oacute;n:</b> </hi></li>
 	<textarea type='text' name="solucion" rows="8" cols="50" >{{informe}}</textarea>
 	<br /> <input type="submit" name="modificar" text="" value="Guardar" />
+	<input type="hidden" name= "_csrf" value="{{token}}" /> 
 	<hi> <li><b>P&uacute;blica :</b>      {{results.isFaq}}</hi><br /></li>
 	<hi> <li><b>Usuario :</b>      	   	{{results.usuario.nombre}} {{results.usuario.apellidos}}</hi><br /></li>
 			
@@ -26,7 +26,6 @@
 		{{#results}}
 	<hi> <li><b>Estado :</b>      	   <h3>	{{results.estado.estado}}</hi></h3></li><br />
 	<hi> <li><b>Id :</b> <input  type="text" size="3" value="{{results.id}}" name="id"></input></hi><br /></li>
-	<hi> <li><b>Problema :</b> {{problema}} </hi>
     <hi> <li><b>Fecha de inicio :</b>    {{results.fechaInicio}}</hi><br /></li>
     <hi> <li><b>Fecha de Cierre :</b>    {{results.fechaCierre}}</hi><br /></li>
 	<hi> <li><b>Problema :</b>           {{results.problema}}</hi><br/></li>

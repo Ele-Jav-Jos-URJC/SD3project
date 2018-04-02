@@ -90,14 +90,18 @@ public class PublicController {
 		}*/
 		
 		if(request.isUserInRole("ADMIN") || request.isUserInRole("TECH") || request.isUserInRole("USER")) {
+			CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
 			if(request.isUserInRole("ADMIN")) {
+				model.addAttribute("token", token.getToken());
 				model.addAttribute("results",incidencia);
 				model.addAttribute("admin","Rol administrador");
 				
 			}else if (request.isUserInRole("TECH")) {
+				model.addAttribute("token", token.getToken());
 				model.addAttribute("tech","Rol técnico");
 				model.addAttribute("results",incidencia);
 			}else {
+				model.addAttribute("token", token.getToken());
 				model.addAttribute("user","Rol usuario");
 				model.addAttribute("results",incidencia);
 			}
@@ -110,8 +114,9 @@ public class PublicController {
 			}
 	}
 	@RequestMapping("/cierreincidencia")
-	public String cierreIncidencia(Model model,@RequestParam String solucion,@RequestParam long id) {
-		
+	public String cierreIncidencia(Model model,@RequestParam String solucion,@RequestParam long id,HttpServletRequest request) {
+		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+		model.addAttribute("token", token.getToken());
 		Incidencia incidencia=publicService.getIncidencia(id);
 		 
 		incidencia=publicService.setIncidencia(solucion,incidencia);
