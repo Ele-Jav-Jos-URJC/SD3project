@@ -95,21 +95,46 @@ public class PublicController {
 				model.addAttribute("token", token.getToken());
 				model.addAttribute("results",incidencia);
 				model.addAttribute("admin","Rol administrador");
+				if (publicService.getIncidenciaFechaCierre(incidencia)==null) {
+					model.addAttribute("results.fechaCierre"," ");
+				}
+				if (publicService.getIncidenciaisFaq(incidencia)==true) {
+					model.addAttribute("results.isFaq"," SI");
+				}else {model.addAttribute("results.isFaq"," NO");}
 				
 			}else if (request.isUserInRole("TECH")) {
 				model.addAttribute("token", token.getToken());
 				model.addAttribute("tech","Rol técnico");
 				model.addAttribute("results",incidencia);
+				if (publicService.getIncidenciaFechaCierre(incidencia)==null) {
+					model.addAttribute("results.fechaCierre"," ");
+				}
+				if (publicService.getIncidenciaisFaq(incidencia)==true) {
+					model.addAttribute("results.isFaq"," SI");
+				}else {model.addAttribute("results.isFaq"," NO");}
 			}else {
 				model.addAttribute("token", token.getToken());
 				model.addAttribute("user","Rol usuario");
 				model.addAttribute("results",incidencia);
+				if (publicService.getIncidenciaFechaCierre(incidencia)==null) {
+					model.addAttribute("results.fechaCierre"," ");
+				}
+				if (publicService.getIncidenciaisFaq(incidencia)==true) {
+					model.addAttribute("results.isFaq"," SI");
+				}else {model.addAttribute("results.isFaq"," NO");}
 			}
 			return "/incidencia";
 		}else
 			{
 			model.addAttribute("publico","Zona pública");
 			model.addAttribute("results",incidencia);
+			if (publicService.getIncidenciaFechaCierre(incidencia)==null) {
+				model.addAttribute("results.fechaCierre"," ");
+			}
+			if (publicService.getIncidenciaisFaq(incidencia)==true) {
+				model.addAttribute("results.isFaq"," SI");
+			}else {model.addAttribute("results.isFaq"," NO");}
+			
 			return "incidencia";
 			}
 	}
@@ -208,6 +233,16 @@ public class PublicController {
 		List<Incidencia> incidencias=publicService.getIncidenciasPendientes();
 		model.addAttribute("results",incidencias);
 		model.addAttribute("lista", "pendiente");
+		Usuario user=publicService.getLogUser();
+		return "listaincidencias";
+	}
+	
+	@GetMapping("/listaincidenciasporUsuario")
+	public String listaIncidenciasporUsuario(Model model) {
+		Usuario user=publicService.getLogUser();
+		List<Incidencia> incidencias=publicService.getIncidenciasByUser(user.getId());
+		model.addAttribute("results",incidencias);
+		model.addAttribute("lista", "Totales");
 		return "listaincidencias";
 	}
 	
