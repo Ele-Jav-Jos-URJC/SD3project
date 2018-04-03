@@ -4,11 +4,14 @@ package es.gestorincidencias.rest.cliente;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import es.gestorincidencias.entidades.CategoriaIncidencia;
 import es.gestorincidencias.entidades.Incidencia;
+import es.gestorincidencias.entidades.Usuario;
 @Component
 public class ClienteRest {
  private RestTemplate restTemplate;
@@ -34,6 +37,12 @@ public ClienteRest() {
 	 return resp;
  }
  
+ public Incidencia getIncidencia(String url){
+	
+	 Incidencia resp=restTemplate.getForObject(url, Incidencia.class);
+	 return resp;
+ }
+ 
  public List<CategoriaIncidencia> getListaCategoria(String url){
 	 List<CategoriaIncidencia> resp=new ArrayList<>();
 	 CategoriaIncidencia[] data=restTemplate.getForObject(url, CategoriaIncidencia[].class);
@@ -46,5 +55,9 @@ public ClienteRest() {
 	 }
 	 
 	 return resp;
+ }
+ 
+ public Usuario addUsuario(String url,Usuario usuario) {
+	 return restTemplate.postForObject(url, usuario, Usuario.class);
  }
 }

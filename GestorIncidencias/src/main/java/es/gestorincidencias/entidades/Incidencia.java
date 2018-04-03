@@ -34,6 +34,7 @@ public class Incidencia {
 	private boolean isFaq;
 	
 	@ManyToOne
+	@JsonView(Principal.class)
 	private Usuario usuario;
 	
 	@ManyToMany
@@ -41,6 +42,8 @@ public class Incidencia {
 	
 	@ManyToOne
 	private PrioridadIncidencia prioridad;
+	
+	@JsonView(Principal.class)
 	@ManyToOne
 	private EstadoIncidencia estado;
 	@ManyToOne
@@ -142,12 +145,12 @@ public class Incidencia {
 		this.tecnicos = tecnicos;
 	}
 
-	public void setTecnicos(Usuario tecnico) {
+	/*public void setTecnicos(Usuario tecnico) {
 		if(this.tecnicos ==null) {
 			this.tecnicos=new ArrayList<Usuario>();
 		}
 		this.tecnicos.add(tecnico);
-	}
+	}*/
 
 	public PrioridadIncidencia getPrioridad() {
 		return prioridad;
