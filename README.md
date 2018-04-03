@@ -39,3 +39,14 @@ En esta página se mostrará una lista con los resultados
 Información de la Incidencia
 ![información de la incidencia] (https://github.com/Ele-Jav-Jos-URJC/SD3project/blob/master/infoIncidencia.png)
 Esta página ofrece la información más detallada de la solución a la incidencia
+
+Despliegue de la aplicación
+Para crear un fichero .jar con la aplicación utililzo el IDE, a través de Run As> Maven build... para que limpie y compile la aplicación utilizo el "goal" "clean package".
+Para la virtualziación de la máquina descargo e instalo los programas Vagrat y virtual box en SO Windows 10.
+A través de la consola del sitema crearé la máquina virtual que utilizaré para el despliegue. Para ello nos situamos en el directorio Vagrant y creo una careta donde se desplegará la máquina. Para ello se utiliza el comando:
+vagrant init ubuntu/trusty32
+esto creará el fichero vagrantfile con la configuración para levantar una máquina ubuntu. Antes de nada se descomenta la línea del fichero
+config.vm.network "private_network", ip: "192.168.33.10"
+que permitirá tener una ip privada para poder conectar desde la máquina anfitriona (tanto al puerto web como al de la base de datos)
+Después se levantará la máquina con el comando vagrant up
+
