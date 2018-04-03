@@ -45,8 +45,13 @@ Para crear un fichero .jar con la aplicación utililzo el IDE, a través de Run 
 Para la virtualziación de la máquina descargo e instalo los programas Vagrat y virtual box en SO Windows 10.
 A través de la consola del sitema crearé la máquina virtual que utilizaré para el despliegue. Para ello nos situamos en el directorio Vagrant y creo una careta donde se desplegará la máquina. Para ello se utiliza el comando:
 vagrant init ubuntu/trusty32
-esto creará el fichero vagrantfile con la configuración para levantar una máquina ubuntu. Antes de nada se descomenta la línea del fichero
+esto creará el fichero vagrantfile con la configuración para levantar una máquina ubuntu 14.04.5 LTS. Antes de nada se descomenta la línea del fichero
 config.vm.network "private_network", ip: "192.168.33.10"
-que permitirá tener una ip privada para poder conectar desde la máquina anfitriona (tanto al puerto web como al de la base de datos)
-Después se levantará la máquina con el comando vagrant up
+que permitirá tener una ip privada para poder conectar desde la máquina anfitriona (tanto al puerto web como al de la base de datos).
+Después se levantará la máquina con el comando "vagrant up"
+Con la máquina levantada accederemos al servidor Ubuntu por SSH, utilizando el comando vagrant ssh
+Una vez dentro de la máquina instalaremos el jre 8 utilizando el comando apt-get. Para instalar esta vesión de Java necesitamos instalar un paquete sudo apt-add-repository ppa:webupd8team/java y después actualizamos con sudo apt-get update. Ahora podemos instalar jre 8 con sudo apt-get install -y openjdk-8-jre. De esta forma ya podemos ejecutar archivos java.
+A continuación instalaremos la base de datos mysql y la configuraremos. Después creamos el esquema donde trabajará nuestra aplciación web
+A través de la carpeta compartida de vagrant podemos pasar el archivo jar con nuestra aplciación web, y desde la máquina virtual la podemos ejecutar para que se despliegue el servidor web y la aplicación. De esta manera tendremos desplegadas en la máquina Ubuntu, tanto el servidor web como la base de datos.
+Podremos acceder desde la máquina anfitriona utilizando la ip privada que configuramos en el archivo vagranfile.
 
