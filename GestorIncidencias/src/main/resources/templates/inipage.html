@@ -10,13 +10,16 @@
 		<br />
 		<a href='/nuevaincidencia'>A&ntilde;adir incidencia</a>
 		<br />
-		<a href='/listaincidenciasadmin'>Listado de incidencias</a>
+		<br />
+		<a href='/listaincidenciasporUsuario'>Listado de mis incidencias</a>
+		<br />
 		<br />
 		{{/user}}
 		{{#tech}}
 			<h2>{{tech}}</h2>
 		<br />
 		<a href='/nuevaincidencia'>A&ntilde;adir incidencia</a>
+		<br />
 		<br />
 		<a href='/listaincidenciaspendientes'>Listado de incidencias pendientes</a>
 		<br />
@@ -28,14 +31,17 @@
 			<h2>{{admin}}</h2>
 		<a href='/nuevousuario'>A&ntilde;adir usuario</a>
 		<br />
+		<br />
 		<a href='/listaincidenciasadmin'>Listado de incidencias</a>
 		<br />
+		<br />
 		<a href='/nuevaincidencia'>A&ntilde;adir incidencia</a>
+		<br />
 		<br />
 		{{/admin}}
 
 		
-
+		<br />
 		<form action="/logout" method="post">
 		<input type="submit" value="Sign Out" />
 		<input type="hidden" name= "_csrf" value="{{token}}" /> 

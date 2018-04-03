@@ -49,7 +49,7 @@ public class Incidencia {
 	public Incidencia() {};
 	
 
-	public Incidencia(Usuario usuario,Date fechaInicio, String problema,PrioridadIncidencia prioridad,EstadoIncidencia estado) {
+	public Incidencia(Usuario usuario,Date fechaInicio, String problema,PrioridadIncidencia prioridad,EstadoIncidencia estado,String informe) {
 		super();
 		
 		this.usuario=usuario;
@@ -58,6 +58,7 @@ public class Incidencia {
 		this.prioridad=prioridad;
 		this.estado = estado;
 		this.isFaq=false;
+		this.informe=informe;
 	}
 
 

@@ -107,9 +107,26 @@ public class PublicService {
 		return usuario.getIncidencias();
 	}
 	
+	public Date getIncidenciaFechaCierre(Incidencia incidencia) {
+		
+		Date fechacierre=incidencia.getFechaCierre();
+		return fechacierre;
+	}
+	
+	public Boolean getIncidenciaisFaq(Incidencia incidencia) {
+		
+		Boolean isfaq=incidencia.isFaq();
+		return isfaq;
+	}
+	
 	public List<Incidencia> getIncidenciasByTech(List<Usuario> tecnicos){
 		
 		return incidenciaRepo.findDisctinctByTecnicos(tecnicos);
+	}
+	
+	public List<Incidencia> getIncidenciaByUser(Usuario user){
+			
+		return incidenciaRepo.findDistinctByUsuario(user); 
 	}
 	
 	// Graba un usuario
