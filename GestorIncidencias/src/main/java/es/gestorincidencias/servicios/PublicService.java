@@ -74,7 +74,7 @@ public class PublicService {
 	public List<Incidencia> getFaqByCategoria(String categoria) {
 		CategoriaIncidencia categoriaIncidencia=categoriaRepo.findDistinctByCategoria(categoria);
 		
-		return categoriaIncidencia.getIncidecncias();
+		return categoriaIncidencia.getIncidencias();
 	}
 	
 /**
@@ -84,7 +84,7 @@ public class PublicService {
  */
 	public List<Incidencia> getIncidenciasByCategoria(String categoria) {
 		CategoriaIncidencia categoriaIncidencia=categoriaRepo.findDistinctByCategoria(categoria);
-		return categoriaIncidencia.getIncidecncias();
+		return categoriaIncidencia.getIncidencias();
 	}
 	
 	/*public Incidencia getIncidencia(String id) {
@@ -110,6 +110,15 @@ public class PublicService {
 	public List<Incidencia> getIncidenciasByTech(List<Usuario> tecnicos){
 		
 		return incidenciaRepo.findDisctinctByTecnicos(tecnicos);
+	}
+	/**
+	 * Añade un nuevo usuario a la BD
+	 * @param user
+	 * @return Usuario
+	 */
+	public Usuario addUsuario (Usuario usuario){
+		return usuarioRepo.save(usuario);
+				
 	}
 	
 	// Graba un usuario
@@ -218,6 +227,10 @@ public class PublicService {
 		}
 		
 		return usuarioRepo.findByEmail(userName);
+	}
+	
+	public RolUsuario getRol(String rol) {
+		return rolusuarioRepo.findByrol(rol);
 	}
 
 }

@@ -1,7 +1,9 @@
 package es.gestorincidencias.controladores;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -102,16 +104,20 @@ public class DataBaseUsage implements CommandLineRunner{
 				incidenciaRepo.save(inc3);
 				incidenciaRepo.save(inc4);
 				
-				//la incidencia 2 y 3 son recogidas por el técnico 
-				inc2.setTecnicos(us2);
+				List<Usuario> tecnicos=new ArrayList<>();
+				//la incidencia 2 y 3 son recogidas por el técnico
+				tecnicos.add(us2);
+				inc2.setTecnicos(tecnicos);
 				inc2.setEstado(enCurso);
-				inc3.setTecnicos(us2);
+				inc3.setTecnicos(tecnicos);
 				inc3.setEstado(enCurso);
 				incidenciaRepo.save(inc2);
 				incidenciaRepo.save(inc3);
 				
 				//la incidencia 4 es recogida por el admin
-				inc4.setTecnicos(us3);
+				tecnicos.clear();
+				tecnicos.add(us3);
+				inc4.setTecnicos(tecnicos);
 				inc4.setEstado(enCurso);
 				incidenciaRepo.save(inc4);
 				

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import es.gestorincidencias.servicios.PublicService;
 import es.gestorincidencias.entidades.*;
+import es.gestorincidencias.repositorios.RolUsuarioRepository;
+
 //import es.gestorincidencias.rest.cliente.IncidenciasCliente;
 import org.springframework.security.web.csrf.CsrfToken;
 import es.gestorincidencias.rest.cliente.ClienteRest;
@@ -26,45 +28,47 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class PublicController {
 	
-	private static final String SERVER="https://localhost:8443/";
-	
+	private static final String SERVER_SECURE="https://localhost:8443/";
+	private static final String SERVER="http://localhost:8080/";
 	@Autowired
 	private PublicService publicService;
 	
 	@Autowired
 	private ClienteRest clienteRest;
 	
-	
+	//Utililza cliente REST
 	@RequestMapping("/")
 	public String cargarIndex(Model model) {
 		//Sin REST
-		List<CategoriaIncidencia> categorias=publicService.getCategorias();
+		//List<CategoriaIncidencia> categorias=publicService.getCategorias();
 		
 		//con REST
-		//List<CategoriaIncidencia> categorias=clienteRest.getListaCategoria(SERVER+"v1/categorias");
+		List<CategoriaIncidencia> categorias=clienteRest.getListaCategoria(SERVER+"v1/categorias");
 		model.addAttribute("results",categorias);
 		return "index";
 	}
 	
+	//Utililza cliente REST
 	@GetMapping("/search")
 	public String buscarIncidencia(Model model, @RequestParam String busqueda) {
 		//sin REST
-		List<Incidencia> incidencias=publicService.getFaqBySearch(busqueda);
+		//List<Incidencia> incidencias=publicService.getFaqBySearch(busqueda);
 		
 		//con REST
-		//List<Incidencia> incidencias=clienteRest.getListaIncidencias(SERVER+"v1/incidencias/faqssearch/"+busqueda);
+		List<Incidencia> incidencias=clienteRest.getListaIncidencias(SERVER+"v1/incidencias/faqssearch/"+busqueda);
 		model.addAttribute("results",incidencias);
 		return "listaincidencias";
 
 	}
 	
+	//Utililza cliente REST
 	@GetMapping("/categoria")
 	public String cargarListadoFaq(Model model,@RequestParam int id) {
 		//sin REST
-		List<Incidencia> incidencias=publicService.getFaqByCategoria(id);
+		//List<Incidencia> incidencias=publicService.getFaqByCategoria(id);
 		
 		//con REST
-		//List<Incidencia> incidencias=clienteRest.getListaIncidencias(SERVER+"v1/faqs/"+publicService.getCategoria(id).getCategoria());
+		List<Incidencia> incidencias=clienteRest.getListaIncidencias(SERVER+"v1/incidencias/faqs/"+publicService.getCategoria(id).getCategoria());
 		model.addAttribute("results",incidencias);
 		
 		return "listaincidencias";
@@ -77,14 +81,15 @@ public class PublicController {
 		return "incidencia";
 	}
 */
+	//Utililza cliente REST
 	@GetMapping("/incidencia")
 	public String cargarIncidencia(Model model,@RequestParam long id,Usuario usuario,HttpServletRequest request) {
 	//		return "incidencia";
-		Incidencia incidencia=publicService.getIncidencia(id);
+		//Incidencia incidencia=publicService.getIncidencia(id);
 		
-		/*con REST
-		 * List<Incidencia> incidencias=clienteRest.getListaIncidencias(SERVER+"/v1/incidencias/item/"+id);
-		Incidencia incidencia=null;
+		//con REST
+		Incidencia incidencia=clienteRest.getIncidencia(SERVER+"/v1/incidencias/item/"+id);
+		/*Incidencia incidencia=null;
 		if(incidencias.size()>0) {
 			incidencia=incidencias.get(0);
 		}*/
@@ -135,9 +140,13 @@ public class PublicController {
 	 */
 	@RequestMapping("/grabausuario")
 	public String grabaUsuario(@RequestParam String nombre,@RequestParam String apellido,@RequestParam String mail,@RequestParam String pass,@RequestParam String rol) {
-
-		Usuario usuario= publicService.setUsuario(nombre,apellido,mail,pass,rol);
-	//	model.addAttribute("results",usuario);
+		//Usuario usuario= publicService.setUsuario(nombre,apellido,mail,pass,rol);
+		Usuario usuario=new Usuario(nombre,apellido,mail,pass);
+		RolUsuario rolUs=new RolUsuario(rol);
+		usuario.setRol(publicService.getRol(rol));
+		publicService.addUsuario(usuario);
+		//cliente POST REST no funciona
+		//clienteRest.addUsuario(SERVER+"v1/usuarios/adduser",usuario);
 		return "datosexito";
 	}
 	

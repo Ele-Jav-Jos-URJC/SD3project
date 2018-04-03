@@ -9,17 +9,20 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+
+import es.gestorincidencias.entidades.Incidencia.Principal;
 
 @Entity
 public class EstadoIncidencia {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
+	@JsonView(Principal.class)
 	private String estado;
 	private String correo;
 	
 	@OneToMany(mappedBy="estado")
-	@JsonIgnore
 	private List<Incidencia> incidencias;
 	
 	public EstadoIncidencia() {}

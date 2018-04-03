@@ -15,6 +15,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 
+import es.gestorincidencias.entidades.Incidencia.Principal;
+
 
 @Entity
 public class Usuario {
@@ -22,8 +24,9 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
-	
+	@JsonView(Principal.class)
 	private String nombre;
+	@JsonView(Principal.class)
 	private String apellidos;
 	private String email;
 	

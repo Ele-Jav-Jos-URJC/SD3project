@@ -48,11 +48,11 @@ public class CategoriaIncidencia {
 		return categoria;
 	}
 	
-	public int getCategoria(String categoria) {
+	/*public int getCategoria(String categoria) {
 		int num=this.id;
 		return num;
 		
-	}
+	}*/
 
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
@@ -60,14 +60,14 @@ public class CategoriaIncidencia {
 
 
 
-	public List<Incidencia> getIncidecncias() {
+	public List<Incidencia> getIncidencias() {
 		return incidencias;
 	}
 
 
 
-	public void setIncidecncias(List<Incidencia> incidecncias) {
-		this.incidencias = incidecncias;
+	public void setIncidecncias(List<Incidencia> incidencias) {
+		this.incidencias = incidencias;
 	}
 	
 	
