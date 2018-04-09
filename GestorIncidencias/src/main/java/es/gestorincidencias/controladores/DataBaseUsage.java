@@ -99,6 +99,7 @@ public class DataBaseUsage implements CommandLineRunner{
 				Incidencia inc2=new Incidencia(us1,ahora,"problema2",baja,pendiente," ");
 				Incidencia inc3=new Incidencia(us1,ahora,"problema3",alta,pendiente," ");
 				Incidencia inc4=new Incidencia(us1,ahora,"problema4",baja, pendiente," ");
+				inc1.setCategoria(red);
 				incidenciaRepo.save(inc1);
 				incidenciaRepo.save(inc2);
 				incidenciaRepo.save(inc3);
@@ -109,8 +110,10 @@ public class DataBaseUsage implements CommandLineRunner{
 				tecnicos.add(us2);
 				inc2.setTecnicos(tecnicos);
 				inc2.setEstado(enCurso);
+				inc2.setCategoria(impresora);
 				inc3.setTecnicos(tecnicos);
 				inc3.setEstado(enCurso);
+				inc3.setCategoria(red);
 				incidenciaRepo.save(inc2);
 				incidenciaRepo.save(inc3);
 				
@@ -119,6 +122,7 @@ public class DataBaseUsage implements CommandLineRunner{
 				tecnicos.add(us3);
 				inc4.setTecnicos(tecnicos);
 				inc4.setEstado(enCurso);
+				inc4.setCategoria(telefonia);
 				incidenciaRepo.save(inc4);
 				
 				//la incidencia 3 es cerrada
@@ -131,8 +135,6 @@ public class DataBaseUsage implements CommandLineRunner{
 				inc4.setFechaCierre(new Date());
 				//cierro la incidencia
 				inc3.setEstado(cerrada);
-				//clasifica la incidencia
-				inc3.setCategoria(red);
 				//la marco como faq para que se muestre en publico
 				inc3.setFaq(true);
 				incidenciaRepo.save(inc3);

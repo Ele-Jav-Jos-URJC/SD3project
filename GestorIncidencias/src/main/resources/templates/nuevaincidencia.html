@@ -8,18 +8,29 @@
 	<h2>Añada los datos de la nueva incidencia</h2>
 	<form action="/guardarincidencia" method="POST">
 
-		Incidencia: <br />
+		Incidencia: (*Ponga en el primer p&aacute;rrafo el t&iacute;tulo)<br />
 		<textarea type='text' name="problema" rows="10" cols="100" ></textarea><br /><br />
-		Categoria :
+		Categoria: (ahora rellena el desplegable de forma din&aacute;mica)
 		<select type="text" name="categoria">
-		<option value="Impresora">Impresora</option>
+		{{#categorias}}
+			<option value={{id}}>{{categoria}}</option>
+		<!-- <option value="Impresora">Impresora</option>
 		<option value="Red">Red</option>
-		<option value="Telefonía">Telefon&iacute;a</option>
-		</select>
+		<option value="Telefonía">Telefon&iacute;a</option>-->
+		{{/categorias}}
+		</select> 
 		<br />
 		<br />
-			
-	Visible en las FAQ:  
+		Prioridad: (añadido)
+		<select type="text" name="prioridad">
+		{{#prioridades}}
+			<option value={{id}}>{{prioridad}}</option>
+		
+		{{/prioridades}}
+		</select> 
+		<br />
+		<br />	
+	Visible en las FAQ: (¿esto no lo debería decidir el t&eacute;cnico?) 
 		
   <input type="radio" name="gender" value="true" checked="checked"> SI 
   <input type="radio" name="gender" value="false"> NO<br>

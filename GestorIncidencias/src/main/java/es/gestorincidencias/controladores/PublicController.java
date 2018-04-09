@@ -176,10 +176,9 @@ public class PublicController {
 	}
 	
 	@RequestMapping("/guardarincidencia")
-	public String altaIncidencia(Model model,@RequestParam String problema, @RequestParam String categoria,@RequestParam boolean gender,HttpServletRequest request) throws ParseException {
+	public String altaIncidencia(Model model,@RequestParam String problema, @RequestParam int categoria,@RequestParam int prioridad,@RequestParam boolean gender,HttpServletRequest request) throws ParseException {
 		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
-			
-		Incidencia inci= publicService.setIncidencia(problema,categoria,gender);
+		Incidencia inci= publicService.setIncidencia(problema,categoria,prioridad,gender);
 		model.addAttribute("results",inci);
 		model.addAttribute("token", token.getToken());
 		return "confirmacion";
@@ -193,9 +192,16 @@ public class PublicController {
 		return "nuevousuario";
 	}
 	
+	//utiliza cliente REST
 	@RequestMapping("/nuevaincidencia")
 	public String altaIncidencia(Model model,HttpServletRequest request) {
 		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+		//añado dinámicamente a traves deservicio REST las categorias
+		List<CategoriaIncidencia> categorias=clienteRest.getListaCategoria(SERVER+"/v1/categorias/");
+		model.addAttribute("categorias",categorias);
+		//añado dinámicamente la prioridad a traves deservicio REST
+		List<PrioridadIncidencia> prioridades=clienteRest.getListaPrioridad(SERVER+"/v1/prioridades/");
+		model.addAttribute("prioridades", prioridades);
 		model.addAttribute("token", token.getToken());
 		return "nuevaincidencia";
 	}

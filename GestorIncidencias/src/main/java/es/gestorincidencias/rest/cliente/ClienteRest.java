@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 import es.gestorincidencias.entidades.CategoriaIncidencia;
 import es.gestorincidencias.entidades.Incidencia;
+import es.gestorincidencias.entidades.PrioridadIncidencia;
 import es.gestorincidencias.entidades.Usuario;
 @Component
 public class ClienteRest {
@@ -49,6 +50,20 @@ public ClienteRest() {
 	 if (data!=null) {
 		 for (CategoriaIncidencia c:data) {
 			 resp.add(c);
+		 } 
+	 }else {
+		 resp=null;
+	 }
+	 
+	 return resp;
+ }
+ 
+ public List<PrioridadIncidencia> getListaPrioridad(String url){
+	 List<PrioridadIncidencia> resp=new ArrayList<>();
+	 PrioridadIncidencia[] data=restTemplate.getForObject(url, PrioridadIncidencia[].class);
+	 if (data!=null) {
+		 for (PrioridadIncidencia p:data) {
+			 resp.add(p);
 		 } 
 	 }else {
 		 resp=null;

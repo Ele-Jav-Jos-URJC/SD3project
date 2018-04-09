@@ -158,11 +158,11 @@ public class PublicService {
 		return usuario;
 	}*/
 	
-	public Incidencia setIncidencia(String problema,String categoria,boolean esfaq) throws ParseException {
+	public Incidencia setIncidencia(String problema,int idCategoria,int idPrioridad,boolean esfaq) throws ParseException {
 	
 	//int num=getCategoria(categoria);
 	//CategoriaIncidencia catinci=categoriaRepo.findOne(num);
-	Usuario usuario=usuarioRepo.findByEmail("email1@mail.com");
+	/*Usuario usuario=usuarioRepo.findByEmail("email1@mail.com");
 	Date fecha=new Date();	
 	Date fechacierre=new Date(01-01-1900);
 	EstadoIncidencia estado=estadoRepo.findOne(1);
@@ -178,12 +178,19 @@ public class PublicService {
 	inci.setFaq(esfaq);
 	inci.setFechaInicio(fecha);
 	inci.setUsuario(usuario);
-	inci.setInforme("");
+	inci.setInforme("");*/
+		Usuario usuario=getLogUser();
+		Date fechaInicio=new Date();
+		EstadoIncidencia estado=estadoRepo.findOne(1);
+		PrioridadIncidencia prioridad=prioridadRepo.findOne(idPrioridad);
+		CategoriaIncidencia categoria=categoriaRepo.findOne(idCategoria);
+		Incidencia inci=new Incidencia(usuario, fechaInicio, problema, prioridad, estado, "");
+		inci.setCategoria(categoria);
 /*	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:ii:ss");
 	String stringFechaConHora = "1900-01-01 00:00:00";
 	Date fechaConHora = sdf.parse(stringFechaConHora);
 	inci.setFechaCierre(fechaConHora);*/
-	inci.setFechaCierre(fechacierre);
+	//inci.setFechaCierre(fechacierre);
 	incidenciaRepo.save(inci);
 
 
