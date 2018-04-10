@@ -43,7 +43,7 @@ public class PublicController {
 		//List<CategoriaIncidencia> categorias=publicService.getCategorias();
 		
 		//con REST
-		List<CategoriaIncidencia> categorias=clienteRest.getListaCategoria(SERVER+"v1/categorias");
+		List<CategoriaIncidencia> categorias=clienteRest.getListaCategoria(SERVER_SECURE+"v1/categorias");
 		model.addAttribute("results",categorias);
 		return "index";
 	}
@@ -55,7 +55,7 @@ public class PublicController {
 		//List<Incidencia> incidencias=publicService.getFaqBySearch(busqueda);
 		
 		//con REST
-		List<Incidencia> incidencias=clienteRest.getListaIncidencias(SERVER+"v1/incidencias/faqssearch/"+busqueda);
+		List<Incidencia> incidencias=clienteRest.getListaIncidencias(SERVER_SECURE+"v1/incidencias/faqssearch/"+busqueda);
 		model.addAttribute("results",incidencias);
 		return "listaincidencias";
 
@@ -68,7 +68,7 @@ public class PublicController {
 		//List<Incidencia> incidencias=publicService.getFaqByCategoria(id);
 		
 		//con REST
-		List<Incidencia> incidencias=clienteRest.getListaIncidencias(SERVER+"v1/incidencias/faqs/"+publicService.getCategoria(id).getCategoria());
+		List<Incidencia> incidencias=clienteRest.getListaIncidencias(SERVER_SECURE+"v1/incidencias/faqs/"+publicService.getCategoria(id).getCategoria());
 		model.addAttribute("results",incidencias);
 		
 		return "listaincidencias";
@@ -88,7 +88,7 @@ public class PublicController {
 		//Incidencia incidencia=publicService.getIncidencia(id);
 		
 		//con REST
-		Incidencia incidencia=clienteRest.getIncidencia(SERVER+"/v1/incidencias/item/"+id);
+		Incidencia incidencia=clienteRest.getIncidencia(SERVER_SECURE+"/v1/incidencias/item/"+id);
 		/*Incidencia incidencia=null;
 		if(incidencias.size()>0) {
 			incidencia=incidencias.get(0);
@@ -197,10 +197,10 @@ public class PublicController {
 	public String altaIncidencia(Model model,HttpServletRequest request) {
 		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
 		//añado dinámicamente a traves deservicio REST las categorias
-		List<CategoriaIncidencia> categorias=clienteRest.getListaCategoria(SERVER+"/v1/categorias/");
+		List<CategoriaIncidencia> categorias=clienteRest.getListaCategoria(SERVER_SECURE+"/v1/categorias/");
 		model.addAttribute("categorias",categorias);
 		//añado dinámicamente la prioridad a traves deservicio REST
-		List<PrioridadIncidencia> prioridades=clienteRest.getListaPrioridad(SERVER+"/v1/prioridades/");
+		List<PrioridadIncidencia> prioridades=clienteRest.getListaPrioridad(SERVER_SECURE+"/v1/prioridades/");
 		model.addAttribute("prioridades", prioridades);
 		model.addAttribute("token", token.getToken());
 		return "nuevaincidencia";
