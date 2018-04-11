@@ -35,7 +35,7 @@ public ClienteRest() throws KeyManagementException, NoSuchAlgorithmException, Ke
 	SSLContext sslContext=org.apache.http.ssl.SSLContexts.custom()
 			.loadTrustMaterial(null, acceptingTrusStrategy).build();
 	
-	SSLConnectionSocketFactory csf=new SSLConnectionSocketFactory(sslContext);
+	SSLConnectionSocketFactory csf=new SSLConnectionSocketFactory(sslContext,NoopHostnameVerifier.INSTANCE);
 	
 	CloseableHttpClient httpClient= HttpClients.custom()
 			.setSSLSocketFactory(csf).build();
