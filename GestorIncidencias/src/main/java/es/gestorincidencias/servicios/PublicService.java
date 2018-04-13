@@ -253,8 +253,8 @@ public class PublicService {
 		return usuarioRepo.findByEmail(userName);
 	}
 	
-	public RolUsuario getRol(String rol) {
-		return rolusuarioRepo.findByrol(rol);
+	public RolUsuario getRol(int rol) {
+		return rolusuarioRepo.findOne(rol);
 	}
 
 }

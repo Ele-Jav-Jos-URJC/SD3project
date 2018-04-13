@@ -23,6 +23,7 @@ import org.springframework.web.client.RestTemplate;
 import es.gestorincidencias.entidades.CategoriaIncidencia;
 import es.gestorincidencias.entidades.Incidencia;
 import es.gestorincidencias.entidades.PrioridadIncidencia;
+import es.gestorincidencias.entidades.RolUsuario;
 import es.gestorincidencias.entidades.Usuario;
 @Component
 public class ClienteRest {
@@ -97,7 +98,24 @@ public ClienteRest() throws KeyManagementException, NoSuchAlgorithmException, Ke
 	 return resp;
  }
  
+public List<RolUsuario> getListaRoles(String url){
+	 List<RolUsuario> resp=new ArrayList<>();
+	 RolUsuario[] data=restTemplate.getForObject(url, RolUsuario[].class);
+	 if (data!=null) {
+		 for (RolUsuario p:data) {
+			 resp.add(p);
+		 } 
+	 }else {
+		 resp=null;
+	 }
+	 
+	 return resp;
+ }
+ 
  public Usuario addUsuario(String url,Usuario usuario) {
+	 
 	 return restTemplate.postForObject(url, usuario, Usuario.class);
  }
+ 
+ 
 }

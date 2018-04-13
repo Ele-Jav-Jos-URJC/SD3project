@@ -45,7 +45,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		http.logout().logoutUrl("/logout");
 		http.logout().logoutSuccessUrl("/login");
 		
-		
+		//desactivo el csrf para la API REST
+		http.csrf().ignoringAntMatchers("/v1/**");
 		//http.csrf().disable();
 	}
 	

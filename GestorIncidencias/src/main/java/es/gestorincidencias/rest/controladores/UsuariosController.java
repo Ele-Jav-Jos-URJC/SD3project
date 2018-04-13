@@ -13,7 +13,7 @@ import es.gestorincidencias.entidades.Usuario;
 import es.gestorincidencias.servicios.PublicService;
 
 @RestController
-@RequestMapping(value="v1/usuarios")
+@RequestMapping(value="/v1/usuarios")
 public class UsuariosController {
 	@Autowired
 	private PublicService pService;

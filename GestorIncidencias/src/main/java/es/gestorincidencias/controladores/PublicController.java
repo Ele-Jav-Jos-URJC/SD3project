@@ -19,6 +19,8 @@ import org.springframework.security.web.csrf.CsrfToken;
 import es.gestorincidencias.rest.cliente.ClienteRest;
 import java.util.ArrayList;
 import java.util.Date;
+
+import javax.management.relation.RoleStatus;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -143,6 +145,8 @@ public class PublicController {
 			return "incidencia";
 			}
 	}
+	
+	
 	@RequestMapping("/cierreincidencia")
 	public String cierreIncidencia(Model model,@RequestParam String solucion,@RequestParam long id,HttpServletRequest request) {
 		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
@@ -163,17 +167,19 @@ public class PublicController {
 	 * @param rol
 	 * @return
 	 */
+	//funciona con cliete REST
 	@RequestMapping("/grabausuario")
-	public String grabaUsuario(@RequestParam String nombre,@RequestParam String apellido,@RequestParam String mail,@RequestParam String pass,@RequestParam String rol) {
-		//Usuario usuario= publicService.setUsuario(nombre,apellido,mail,pass,rol);
+	public String grabaUsuario(@RequestParam String nombre,@RequestParam String apellido,@RequestParam String mail,@RequestParam String pass,@RequestParam int rol) {
+	
 		Usuario usuario=new Usuario(nombre,apellido,mail,pass);
-		RolUsuario rolUs=new RolUsuario(rol);
 		usuario.setRol(publicService.getRol(rol));
 		publicService.addUsuario(usuario);
 		//cliente POST REST no funciona
-		//clienteRest.addUsuario(SERVER+"v1/usuarios/adduser",usuario);
+		clienteRest.addUsuario(SERVER_SECURE+"/v1/usuarios/adduser",usuario);
 		return "datosexito";
 	}
+	
+	
 	
 	@RequestMapping("/guardarincidencia")
 	public String altaIncidencia(Model model,@RequestParam String problema, @RequestParam int categoria,@RequestParam int prioridad,@RequestParam boolean gender,HttpServletRequest request) throws ParseException {
@@ -183,10 +189,14 @@ public class PublicController {
 		model.addAttribute("token", token.getToken());
 		return "confirmacion";
 	}
-
+	
+	//utiliza cliente REST
 	@RequestMapping("/nuevousuario")
 	public String altaUsuario(Model model,HttpServletRequest request) {
 		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+		//peticion cliente rest
+		List<RolUsuario> roles=clienteRest.getListaRoles(SERVER_SECURE + "v1/roles");
+		model.addAttribute("roles", roles);
 		model.addAttribute("token", token.getToken());
 
 		return "nuevousuario";
