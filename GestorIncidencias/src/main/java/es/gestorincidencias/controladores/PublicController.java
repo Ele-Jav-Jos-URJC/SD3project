@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import es.gestorincidencias.servicios.PublicService;
 import es.gestorincidencias.entidades.*;
@@ -22,16 +23,17 @@ import java.util.Date;
 
 import javax.management.relation.RoleStatus;
 import javax.servlet.http.HttpServletRequest;
+import javax.websocket.server.PathParam;
 
 /**
- * @author CAN
+ *@author CAN
  *@author Javier Aparicio
  */
 @Controller
 public class PublicController {
 	
 	private static final String SERVER_SECURE="https://localhost:8443/";
-	private static final String SERVER="http://localhost:8080/";
+	//private static final String SERVER="http://localhost:8080/";
 	@Autowired
 	private PublicService publicService;
 	
@@ -113,12 +115,12 @@ public class PublicController {
 				model.addAttribute("token", token.getToken());
 				model.addAttribute("tech","Rol técnico");
 				model.addAttribute("results",incidencia);
-				if (publicService.getIncidenciaFechaCierre(incidencia)==null) {
+				/*if (publicService.getIncidenciaFechaCierre(incidencia)==null) {
 					model.addAttribute("results.fechaCierre"," ");
-				}
+				}*/
 				if (publicService.getIncidenciaisFaq(incidencia)==true) {
-					model.addAttribute("results.isFaq"," SI");
-				}else {model.addAttribute("results.isFaq"," NO");}
+					model.addAttribute("faq","ok");
+				}//else {model.addAttribute("results.isFaq"," NO");}
 			}else {
 				model.addAttribute("token", token.getToken());
 				model.addAttribute("user","Rol usuario");
@@ -148,16 +150,42 @@ public class PublicController {
 	
 	
 	@RequestMapping("/cierreincidencia")
-	public String cierreIncidencia(Model model,@RequestParam String solucion,@RequestParam long id,HttpServletRequest request) {
+	public String cierreIncidencia(Model model,@RequestParam String solucion,@RequestParam long id,@RequestParam boolean isFaq,HttpServletRequest request) {
 		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
 		model.addAttribute("token", token.getToken());
 		Incidencia incidencia=publicService.getIncidencia(id);
 		 
-		incidencia=publicService.setIncidencia(solucion,incidencia);
+		incidencia=publicService.setIncidencia(solucion,incidencia,isFaq);
+		
 			return "/datosexito";
 
 	}
 	
+	/**@author Javier Aparicio
+	 * Método del controlador que modifica una incidencia mediante cliente REST
+	 * 
+	 * @param model
+	 * @param solucion
+	 * @param id
+	 * @param isFaq
+	 * @param request
+	 * @return pagina web
+	 */
+	@RequestMapping("/modificarincidencia")
+	public String modificarIncidencia(Model model,@RequestParam String solucion,@RequestParam long id,@RequestParam boolean isFaq,HttpServletRequest request) {
+		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+		model.addAttribute("token", token.getToken());
+		//sin REST
+		//publicService.modficarIncidencia(id, solucion, isFaq);
+
+		//con REST
+		Incidencia incidencia=clienteRest.getIncidencia(SERVER_SECURE+"/v1/incidencias/item/"+id);
+		incidencia.setInforme(solucion);
+		incidencia.setFaq(isFaq);
+		clienteRest.modificarIncidencia(SERVER_SECURE+"/v1/incidencias/modificar", incidencia);
+		return "/datosexito";
+
+	}
 		
 	/**
 	 * @param nombre
@@ -169,9 +197,9 @@ public class PublicController {
 	 */
 	//funciona con cliete REST
 	@RequestMapping("/grabausuario")
-	public String grabaUsuario(@RequestParam String nombre,@RequestParam String apellido,@RequestParam String mail,@RequestParam String pass,@RequestParam int rol) {
+	public String grabaUsuario(@RequestParam String nombre,@RequestParam String apellidos,@RequestParam String email,@RequestParam String pass,@RequestParam int rol) {
 	
-		Usuario usuario=new Usuario(nombre,apellido,mail,pass);
+		Usuario usuario=new Usuario(nombre,apellidos,email,pass);
 		usuario.setRol(publicService.getRol(rol));
 		publicService.addUsuario(usuario);
 		//cliente POST REST no funciona
@@ -253,12 +281,18 @@ public class PublicController {
 		return "listaincidencias";
 	}
 	
-	@GetMapping("/listaincidenciaspendientes")
-	public String listaIncidenciasPendientes(Model model) {
+	@RequestMapping("/listaincidenciaspendientes")
+	public String listaIncidenciasPendientes(Model model,HttpServletRequest request) {
 		List<Incidencia> incidencias=publicService.getIncidenciasPendientes();
+		if(!request.isUserInRole("USER")){
+			model.addAttribute("notuser",true);
+			CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+			model.addAttribute("token", token.getToken());
+		}
 		model.addAttribute("results",incidencias);
 		model.addAttribute("lista", "pendiente");
-		Usuario user=publicService.getLogUser();
+		//Usuario user=publicService.getLogUser();
+		
 		return "listaincidencias";
 	}
 	
@@ -289,6 +323,14 @@ public class PublicController {
 		model.addAttribute("results",incidencia2);
 
 		return "confirmacion";
+	}
+	
+	@RequestMapping("/recogerincidencia")
+	public String setIncidenciaByTech(Model model,@RequestParam long id, HttpServletRequest request) {
+		/*CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+		model.addAttribute("token", token.getToken());*/
+		publicService.setIncidenciaByTech(id);
+		return "/listaincidenciastratadas";
 	}
 	
 }

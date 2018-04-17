@@ -15,7 +15,9 @@ import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -117,5 +119,9 @@ public List<RolUsuario> getListaRoles(String url){
 	 return restTemplate.postForObject(url, usuario, Usuario.class);
  }
  
- 
+ public ResponseEntity<Incidencia> modificarIncidencia(String url, Incidencia incidencia){
+	 HttpEntity<Incidencia> request=new HttpEntity<Incidencia>(incidencia);
+	 return restTemplate.exchange(url,HttpMethod.PUT,request,Incidencia.class);
+	 
+ }
 }

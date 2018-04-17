@@ -74,12 +74,13 @@ public class PublicService {
 	public List<Incidencia> getFaqByCategoria(String categoria) {
 		CategoriaIncidencia categoriaIncidencia=categoriaRepo.findDistinctByCategoria(categoria);
 		
-		return categoriaIncidencia.getIncidencias();
+		//return categoriaIncidencia.getIncidencias();
+		return incidenciaRepo.findDisctinctByCategoriaAndIsFaq(categoriaIncidencia, true);
 	}
 	
 /**
  *  Pide a la BD un listado de incidencias peretenecientes a una categoría
- * @param categoria
+ *  @param categoria
  * @return
  */
 	public List<Incidencia> getIncidenciasByCategoria(String categoria) {
@@ -118,13 +119,19 @@ public class PublicService {
 		Boolean isfaq=incidencia.isFaq();
 		return isfaq;
 	}
-	
+	/**
+	 * Devuelve las incidecias que están llevando un listado de técnicos
+	 * @param tecnicos
+	 * @return List<Incidencias>
+	 */
 	public List<Incidencia> getIncidenciasByTech(List<Usuario> tecnicos){
 		
 		return incidenciaRepo.findDisctinctByTecnicos(tecnicos);
 	}
+	
 	/**
 	 * Añade un nuevo usuario a la BD
+	 * @author Javier Aparicio
 	 * @param user
 	 * @return Usuario
 	 */
@@ -199,8 +206,24 @@ public class PublicService {
 		
 	}
 	
+	/**
+	 * @author Javier Aparicio
+	 * modifica los campos informe y isfaq de una incidencia en su tratamiento
+	 * @param id
+	 * @param informe
+	 * @param isFaq
+	 * @return Incidencia
+	 */
+	public Incidencia modficarIncidencia(long id,String informe,boolean isFaq) {
+		Incidencia resp=incidenciaRepo.findOne(id);
+		resp.setFaq(isFaq);
+		resp.setInforme(informe);
+		incidenciaRepo.save(resp);
+		return resp;
+	}
+	
 	// J Cierra una incidencia
-	public Incidencia setIncidencia(String informe,Incidencia incidencia) {
+	public Incidencia setIncidencia(String informe,Incidencia incidencia,boolean isFaq) {
 	EstadoIncidencia estado=estadoRepo.findOne(3);
 	PrioridadIncidencia prioridad=prioridadRepo.findOne(1);
 	incidencia.setFechaCierre(ahora);
@@ -242,7 +265,10 @@ public class PublicService {
 	public List<PrioridadIncidencia> getAllPrioridad() {
 		return prioridadRepo.findAll();
 	}
-	
+	/**
+	 * devuelve el ususario que está autenticado en ese momento
+	 * @return Usuario
+	 */
 	public Usuario getLogUser() {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String userName="";
@@ -255,6 +281,20 @@ public class PublicService {
 	
 	public RolUsuario getRol(int rol) {
 		return rolusuarioRepo.findOne(rol);
+	}
+	
+	/**Asigna al usuario logeado la incidencia correspondiente
+	 * 
+	 * @param idIncidencia
+	 * @return Incidencia
+	 */
+	public Incidencia setIncidenciaByTech(long idIncidencia) {
+		Incidencia incidencia=incidenciaRepo.getOne(idIncidencia);
+		Usuario tecnico=getLogUser();
+		incidencia.getTecnicos().add(tecnico);
+		incidencia.setEstado(estadoRepo.findOne(2));
+		incidenciaRepo.save(incidencia);
+		return incidencia;
 	}
 
 }

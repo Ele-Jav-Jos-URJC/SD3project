@@ -7,7 +7,15 @@
 	<h2>Listado de Incidencias</h2>
 	<ul>
 		{{#results}}
-			<li><a href="/incidencia?id={{id}}">{{problema}}</a> </li>
+			<li><a href="/incidencia?id={{id}}">{{problema}}</a>
+			{{#notuser}}
+			<form action="/recogerincidencia">
+				<input type="hidden" name="id" value={{id}}>
+				<input type="hidden" name= "_csrf" value="{{token}}" /> 
+				<input type="submit" value="Tratar"/>
+			</form>
+			{{/notuser}}
+			 </li>
 		{{/results}}
 		{{^results}}
 			No hay incidencias con las caracteristicas solicitadas.

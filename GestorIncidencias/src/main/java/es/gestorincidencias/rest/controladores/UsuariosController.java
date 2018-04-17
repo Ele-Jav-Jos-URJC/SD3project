@@ -20,9 +20,9 @@ public class UsuariosController {
 	
 	@PostMapping(value="/adduser")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Usuario addUser(@RequestBody Usuario usuario){
-		return pService.addUsuario(usuario);
-		
+	public ResponseEntity<Usuario> addUser(@RequestBody Usuario usuario){
+		pService.addUsuario(usuario);
+		return new ResponseEntity<>(usuario,HttpStatus.CREATED);
 		
 	}
 }
