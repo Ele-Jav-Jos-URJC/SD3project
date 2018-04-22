@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
 
 /**
- *@author CAN
+ *@author Jose Javier Escudero
  *@author Javier Aparicio
  */
 @Controller
