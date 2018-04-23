@@ -1,13 +1,10 @@
 package es.gestorincidencias.servicios;
 
-import static org.assertj.core.api.Assertions.registerCustomDateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import es.gestorincidencias.entidades.*;
 import es.gestorincidencias.repositorios.*;

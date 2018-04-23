@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import es.gestorincidencias.entidades.CategoriaIncidencia;
 
 
-@CacheConfig (cacheNames="incidencia")
+@CacheConfig (cacheNames="Incidencia")
 public interface CategoriaRepository extends JpaRepository<CategoriaIncidencia, Integer> {
 	
 	@Cacheable

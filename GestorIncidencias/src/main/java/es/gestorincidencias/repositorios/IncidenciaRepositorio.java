@@ -12,7 +12,7 @@ import es.gestorincidencias.entidades.EstadoIncidencia;
 import es.gestorincidencias.entidades.Incidencia;
 import es.gestorincidencias.entidades.Usuario;
 
-@CacheConfig (cacheNames="incidencia")
+@CacheConfig (cacheNames="Incidencia")
 public interface IncidenciaRepositorio extends JpaRepository<Incidencia, Long> {
 
 	@Cacheable
