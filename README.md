@@ -209,7 +209,7 @@ Para ejecutar la aplicación tenemos en cuenta que el fichero porperties guarda 
 	
 	spring.datasource.driver-class-name=com.mysql.jdbc.Driver
 	
-	spring.jpa.hibernate.ddl-auto=create-drop
+	spring.jpa.hibernate.ddl-auto=none
 
 por lo que tendremos que cambiar los parámetros a través de la línea de comandos en el momento de ejecutar el archivo, por lo tanto, usaremos:
 	
@@ -217,11 +217,19 @@ por lo que tendremos que cambiar los parámetros a través de la línea de coman
 	
 Con esta configuración creo el esquema de la bd. Hay que finalizar la aplicación y volver a arrancar. Las siguientes veces que arranque la aplicación dejaré el valor de dll-auto a “none” (por defecto en el properties) ya estaría en producción.
 
+### Creación maquinas 3ªfase
 
-### Balanceador de carga
 Antes de instalar el balanceador vamos a crear una nueva máquina virtual que contendrá también la aplicación, será webapp2 y configuraremos su ip privada como:
 	
 	config.vm.network "private_network", ip: "192.168.33.12"
+
+También se creará otra máquina para que contenga la aplciación con el servicio interno
+
+	config.vm.network "private_network", ip: "192.168.33.14"
+
+Ambas máquinas se confgurarán como webapp1, con la instlación del jdk 8.
+
+### Balanceador de carga
 
 Creamos una nueva máquina virtual Ubuntu 14.04 para instalar el balanceador haproxy y le damos una nueva ip privada editando el vagrantfile:
 	
