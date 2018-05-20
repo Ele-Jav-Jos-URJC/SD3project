@@ -40,7 +40,7 @@ Listado de búsqueda
 En esta página se mostrará una lista con los resultados
 
 Información de la Incidencia
-![información de la incidencia] (https://github.com/Ele-Jav-Jos-URJC/SD3project/blob/master/infoIncidencia.png)
+![información de la incidencia](https://github.com/Ele-Jav-Jos-URJC/SD3project/blob/master/infoIncidencia.png)
 Esta página ofrece la información más detallada de la solución a la incidencia
 
 Despliegue de la aplicación
@@ -59,33 +59,49 @@ A través de la carpeta compartida de vagrant podemos pasar el archivo jar con n
 Podremos acceder desde la máquina anfitriona utilizando la ip privada que configuramos en el archivo vagranfile.
 
 Documentación de servicio interno
+
 Obtener un listado de las categorías de las incidencias (GET): 
-https://<ip service>:8443/v1/categorias/
+	https://<ip service>:8443/v1/categorias/
+
 Obtener un listado de incidencias clasificadas como faq’s por termino de búsqueda (GET):
 	https://<ip service>:8443/v1/incidencias/faqssearch/<termino de búsqueda>
-obtener un listado de incidencias clasificadas como faq’s pertenecientes a una categoría (GET):
+
+Obtener un listado de incidencias clasificadas como faq’s pertenecientes a una categoría (GET):
 	https:// <ip service>:8443/v1/incidencias/faqs/<nombre de la categoria>
+
 Obtener una incidencia por id (GET):
 	https:// <ip service>:8443/v1/incidencias/item/<id>
+
 Modificar una incidencia (PUT):
-https:// <ip service>:8443/v1/incidencias/modificar
+	https:// <ip service>:8443/v1/incidencias/modificar
+
 Añadir un usuario nuevo (POST):
 	https:// <ip service>:8443/v1/usuarios/adduser
+
 Obtener los roles de usuario(GET):
 	https:// <ip service>:8443/v1/roles
+
 Devuelve una lista de prioridades de incidencia (GET):
 	https:// <ip service>:8443/v1/prioridades/
 
 Métodos del cliente Rest implementado con RESTTemplate:
+	
 	List<Incidencia> getListaIncidencias(String url);
+
 	Incidencia getIncidencia(String url);
+
 	List<CategoriaIncidencia> getListaCategoria(String url);
+
 	List<PrioridadIncidencia> getListaPrioridad(String url);
+
 	List<PrioridadIncidencia> getListaPrioridad(String url);
+
 	Usuario addUsuario(String url,Usuario usuario);
+
 	ResponseEntity<Incidencia> modificarIncidencia(String url, Incidencia incidencia);
  
 Virtualización
+
 Vista física
 Instancias (servidores virtuales)  VM más RAM para BD 
 Creamos una máquina virtual con vagrant Ubuntu 14.04
