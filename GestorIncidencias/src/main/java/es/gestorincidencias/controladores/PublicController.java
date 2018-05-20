@@ -134,7 +134,7 @@ public class PublicController {
 					model.addAttribute("results.isFaq"," SI");
 				}else {model.addAttribute("results.isFaq"," NO");}
 			}
-			return "/incidencia";
+			return "incidencia";
 		}else
 			{
 			model.addAttribute("publico","Zona pública");

@@ -46,8 +46,8 @@ public class LoginController {
 			model.addAttribute("admin","Rol administrador");
 		}else if (request.isUserInRole("TECH")) {
 			model.addAttribute("tech","Rol técnico");
-		}else {
-			model.addAttribute("user","Rol usuario");
+		}else if (request.isUserInRole("USER")) {
+			model.addAttribute("usuario","Rol usuario");
 		}
 		
 		return "inipage";
