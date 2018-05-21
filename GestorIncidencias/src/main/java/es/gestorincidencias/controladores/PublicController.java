@@ -159,7 +159,7 @@ public class PublicController {
 		 
 		incidencia=publicService.setIncidencia(solucion,incidencia,isFaq);
 		
-			return "/datosexito";
+			return "datosexito";
 
 	}
 	
@@ -185,7 +185,7 @@ public class PublicController {
 		incidencia.setInforme(solucion);
 		incidencia.setFaq(isFaq);
 		clienteRest.modificarIncidencia(SERVER_REST_SERVICE+"/v1/incidencias/modificar", incidencia);
-		return "/datosexito";
+		return "datosexito";
 
 	}
 		
